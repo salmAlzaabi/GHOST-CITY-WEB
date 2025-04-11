@@ -1,229 +1,227 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ghost City</title>
+  <title>GHOST CITY</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #1d1d1d; /* Dark background */
-      color: white;
+      background-color: #1c1c1c;
+      color: #fff;
       margin: 0;
       padding: 0;
     }
-
-    header {
+    .header {
       background-color: #333;
       padding: 20px;
       text-align: center;
     }
-
-    .header-title {
-      font-size: 2em;
-      color: #fff;
-      font-weight: bold;
+    .header h1 {
+      margin: 0;
+      font-size: 36px;
     }
-
-    .header-nav {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
-
-    .header-nav a {
+    .button {
+      background-color: #444;
       color: #fff;
-      text-decoration: none;
       padding: 10px 20px;
-      background-color: #444;
+      margin: 20px;
+      cursor: pointer;
+      border: none;
       border-radius: 5px;
-      transition: background-color 0.3s;
+      font-size: 16px;
     }
-
-    .header-nav a:hover {
-      background-color: #888;
-    }
-
-    .content {
-      padding: 40px;
-      text-align: center;
-    }
-
-    h2 {
-      font-size: 2em;
-      margin-bottom: 20px;
-    }
-
-    /* Styling for "Job Application" section */
-    .job-application-section {
-      margin-top: 40px;
-      text-align: center;
-      padding: 20px;
-      background-color: #444;
-      border-radius: 8px;
-      display: none; /* Initially hidden */
-    }
-
-    .job-application-section.active {
-      display: block;
-    }
-
-    .job-application-section ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .job-application-section li {
-      margin: 10px 0;
-      padding: 10px;
+    .button:hover {
       background-color: #555;
-      border-radius: 5px;
     }
-
-    .job-application-section a {
-      color: white;
-      text-decoration: none;
-    }
-
-    .job-application-section a:hover {
-      background-color: #888;
-    }
-
-    /* Form Styles */
-    .form-container {
-      margin-top: 50px;
-      padding: 20px;
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       background-color: #333;
+      padding: 20px;
       border-radius: 10px;
-      width: 50%;
-      margin: auto;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+      z-index: 9999;
     }
-
-    .form-container input,
-    .form-container select,
-    .form-container textarea {
+    .popup input, .popup select {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
-      background-color: #555;
+      background-color: #444;
       border: none;
       border-radius: 5px;
-      color: white;
+      color: #fff;
     }
-
-    .form-container button {
-      padding: 10px 20px;
-      background-color: #007bff;
+    .popup input:focus, .popup select:focus {
+      outline: none;
+      border: 2px solid #666;
+    }
+    .popup button {
+      background-color: #28a745;
+      color: #fff;
+      padding: 10px;
       border: none;
       border-radius: 5px;
-      color: white;
-      font-size: 16px;
       cursor: pointer;
+      font-size: 16px;
     }
-
-    .form-container button:hover {
-      background-color: #0056b3;
+    .popup button:hover {
+      background-color: #218838;
     }
-
-    .message {
-      margin-top: 20px;
-      font-size: 18px;
+    .close-btn {
+      background-color: #dc3545;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
     }
-
-    .message.success {
-      color: green;
+    .close-btn:hover {
+      background-color: #c82333;
     }
-
-    .message.error {
-      color: red;
+    .checkmark {
+      font-size: 48px;
+      color: #28a745;
+      text-align: center;
+    }
+    .checkmark svg {
+      animation: checkmark 1s ease-out;
+    }
+    @keyframes checkmark {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="header-title">Ghost City</div>
-  <div class="header-nav">
-    <a href="#" id="apply-job-button">تقديم على الوظائف</a>
+  <!-- Header Section -->
+  <div class="header">
+    <h1>GHOST CITY</h1>
+    <button class="button" id="openJobPopup">تقديم الوظائف</button>
   </div>
-</header>
 
-<div class="content">
-  <h2>أهلاً بك في Ghost City!</h2>
-  <p>اضغط على الزر في أعلى يمين الصفحة لتقديم طلبك على الوظائف.</p>
-</div>
+  <!-- Job Selection Popup -->
+  <div class="popup" id="jobPopup">
+    <h2>اختر الوظيفة</h2>
+    <button class="button" onclick="openJobForm('وزارة الداخلية')">وزارة الداخلية</button>
+    <button class="button" onclick="openJobForm('وزارة العدل')">وزارة العدل</button>
+    <button class="button" onclick="openJobForm('وزارة التجارة')">وزارة التجارة</button>
+    <button class="button" onclick="openJobForm('وزارة الصحة')">وزارة الصحة</button>
+    <button class="close-btn" onclick="closePopup()">إغلاق</button>
+  </div>
 
-<!-- Job Application Section - Initially Hidden -->
-<div id="job-application-section" class="job-application-section">
-  <h2>الوظائف المتاحة</h2>
-  <ul>
-    <li><a href="#interior-ministry">وزارة الداخلية</a></li>
-    <li><a href="#justice-ministry">وزارة العدل</a></li>
-    <li><a href="#commerce-ministry">وزارة التجارة</a></li>
-    <li><a href="#health-ministry">وزارة الصحة</a></li>
-  </ul>
-</div>
+  <!-- Job Form Popup -->
+  <div class="popup" id="jobFormPopup">
+    <h2 id="jobTitle">نموذج تقديم لوظيفة</h2>
+    <form id="jobForm">
+      <label for="discordUsername">يوزر الديسكورد:</label>
+      <input type="text" id="discordUsername" name="discordUsername" placeholder="أدخل يوزر الديسكورد" required>
 
-<!-- Job Application Form Section -->
-<div id="job-application-form" class="form-container" style="display: none;">
-  <h2>التقديم على الوظيفة</h2>
-  <form id="job-form">
-    <label for="discord-username">يوزر الديسكورد:</label>
-    <input type="text" id="discord-username" name="discord-username" required>
-    <small>يرجى التأكد من أن اليوزر صحيح، حيث سيتم إرسال القبول على نفس اليوزر.</small>
-    <label for="job-role">اختر الوظيفة:</label>
-    <select id="job-role" name="job-role" required>
-      <option value="interior-ministry">وزارة الداخلية</option>
-      <option value="justice-ministry">وزارة العدل</option>
-      <option value="commerce-ministry">وزارة التجارة</option>
-      <option value="health-ministry">وزارة الصحة</option>
-    </select>
-    <label for="additional-info">معلومات إضافية:</label>
-    <textarea id="additional-info" name="additional-info"></textarea>
-    <button type="submit">تقديم</button>
-  </form>
-  <div class="message" id="form-message"></div>
-</div>
+      <label for="characterName">اسم الشخصية:</label>
+      <input type="text" id="characterName" name="characterName" placeholder="أدخل اسم الشخصية" required>
 
-<script>
-  // Toggle Job Application Section visibility
-  document.getElementById('apply-job-button').addEventListener('click', function() {
-    const jobSection = document.getElementById('job-application-section');
-    jobSection.classList.toggle('active'); // Toggle visibility
-  });
+      <label for="extraQuestion">السؤال الإضافي:</label>
+      <input type="text" id="extraQuestion" name="extraQuestion" placeholder="إضافة سؤال حسب الوظيفة" required>
 
-  // Show form when a job is selected
-  document.querySelectorAll('.job-application-section a').forEach(function(link) {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      const jobForm = document.getElementById('job-application-form');
-      jobForm.style.display = 'block';
-      document.getElementById('job-application-section').style.display = 'none';
+      <button type="submit" class="button">إرسال التقديم</button>
+    </form>
+    <button class="close-btn" onclick="closePopup()">إغلاق</button>
+  </div>
+
+  <!-- Success Popup -->
+  <div class="popup" id="successPopup">
+    <div class="checkmark">
+      <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" stroke="green" stroke-width="5" fill="none" />
+        <path fill="none" stroke="green" stroke-width="5" d="M35 50 L45 60 L65 40" />
+      </svg>
+    </div>
+    <h2>تم إرسال تقديمك!</h2>
+    <p>سيتم التواصل معك في الخاص عبر ديسكورد.</p>
+    <button class="close-btn" onclick="closeSuccessPopup()">إغلاق</button>
+  </div>
+
+  <script>
+    const openJobPopupBtn = document.getElementById('openJobPopup');
+    const jobPopup = document.getElementById('jobPopup');
+    const jobFormPopup = document.getElementById('jobFormPopup');
+    const successPopup = document.getElementById('successPopup');
+    const jobForm = document.getElementById('jobForm');
+    const jobTitle = document.getElementById('jobTitle');
+
+    // Open the Job Selection Popup
+    openJobPopupBtn.addEventListener('click', () => {
+      jobPopup.style.display = 'block';
     });
-  });
 
-  // Handle form submission
-  document.getElementById('job-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const discordUsername = document.getElementById('discord-username').value;
-    const jobRole = document.getElementById('job-role').value;
-    const additionalInfo = document.getElementById('additional-info').value;
-    
-    // Show success message
-    document.getElementById('form-message').innerHTML = 'تم إرسال تقديمك! سيتم التواصل معك عبر الديسكورد.';
-    document.getElementById('form-message').className = 'message success';
-    
-    // Send data to Discord webhook (You can implement this functionality later)
-    const webhookUrl = 'https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw';
-    fetch(webhookUrl, {
-      method: 'POST',
-      body: JSON.stringify({
-        content: `تم تقديم طلب من يوزر ديسكورد: ${discordUsername}\nالوظيفة: ${jobRole}\nمعلومات إضافية: ${additionalInfo}`
-      }),
-      headers: { 'Content-Type': 'application/json' }
+    // Close Popup
+    function closePopup() {
+      jobPopup.style.display = 'none';
+      jobFormPopup.style.display = 'none';
+    }
+
+    // Open Job Form based on selected job
+    function openJobForm(job) {
+      jobPopup.style.display = 'none';
+      jobFormPopup.style.display = 'block';
+      jobTitle.innerHTML = `نموذج تقديم لوظيفة ${job}`;
+      
+      // Modify form questions based on the selected job
+      const extraQuestionInput = document.getElementById('extraQuestion');
+      if (job === 'وزارة الداخلية') {
+        extraQuestionInput.placeholder = "أدخل سؤال خاص بوزارة الداخلية";
+      } else if (job === 'وزارة العدل') {
+        extraQuestionInput.placeholder = "أدخل سؤال خاص بوزارة العدل";
+      } else if (job === 'وزارة التجارة') {
+        extraQuestionInput.placeholder = "أدخل سؤال خاص بوزارة التجارة";
+      } else if (job === 'وزارة الصحة') {
+        extraQuestionInput.placeholder = "أدخل سؤال خاص بوزارة الصحة";
+      }
+    }
+
+    // Handle form submission
+    jobForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const discordUsername = document.getElementById('discordUsername').value;
+      const characterName = document.getElementById('characterName').value;
+      const extraQuestion = document.getElementById('extraQuestion').value;
+
+      // Send data to Discord Webhook
+      const webhookURL = 'https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw';
+      
+      const payload = {
+        username: discordUsername,
+        content: `تم تقديم طلب وظيفة من قبل ${discordUsername} (اسم الشخصية: ${characterName}).\nالسؤال الإضافي: ${extraQuestion}`
+      };
+
+      fetch(webhookURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => response.json())
+      .then(data => {
+        jobFormPopup.style.display = 'none';
+        successPopup.style.display = 'block';
+      })
+      .catch(error => {
+        console.error('Error sending webhook:', error);
+      });
     });
-  });
-</script>
+
+    // Close Success Popup
+    function closeSuccessPopup() {
+      successPopup.style.display = 'none';
+    }
+  </script>
 
 </body>
 </html>
