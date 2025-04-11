@@ -1,227 +1,220 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GHOST CITY</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #1c1c1c;
-      color: #fff;
-      margin: 0;
-      padding: 0;
-    }
-    .header {
-      background-color: #333;
-      padding: 20px;
-      text-align: center;
-    }
-    .header h1 {
-      margin: 0;
-      font-size: 36px;
-    }
-    .button {
-      background-color: #444;
-      color: #fff;
-      padding: 10px 20px;
-      margin: 20px;
-      cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-    .button:hover {
-      background-color: #555;
-    }
-    .popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #333;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
-      z-index: 9999;
-    }
-    .popup input, .popup select {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      background-color: #444;
-      border: none;
-      border-radius: 5px;
-      color: #fff;
-    }
-    .popup input:focus, .popup select:focus {
-      outline: none;
-      border: 2px solid #666;
-    }
-    .popup button {
-      background-color: #28a745;
-      color: #fff;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .popup button:hover {
-      background-color: #218838;
-    }
-    .close-btn {
-      background-color: #dc3545;
-      color: #fff;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .close-btn:hover {
-      background-color: #c82333;
-    }
-    .checkmark {
-      font-size: 48px;
-      color: #28a745;
-      text-align: center;
-    }
-    .checkmark svg {
-      animation: checkmark 1s ease-out;
-    }
-    @keyframes checkmark {
-      0% { transform: scale(0); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost City</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #1f1f1f;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        .button-close {
+            background-color: #f44336;
+            color: #fff;
+        }
+
+        .button-close:hover {
+            background-color: #d32f2f;
+        }
+
+        .content {
+            margin: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            text-align: center;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal h2 {
+            margin: 0 0 20px;
+            font-size: 20px;
+        }
+
+        .modal input, .modal select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #222;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 5px;
+        }
+
+        .modal .submit-btn {
+            background-color: #3e3e3e;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal .submit-btn:hover {
+            background-color: #616161;
+        }
+
+        .modal .checkbox {
+            margin: 10px 0;
+        }
+
+        .modal .checkbox label {
+            color: #fff;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #1f1f1f;
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Header Section -->
-  <div class="header">
-    <h1>GHOST CITY</h1>
-    <button class="button" id="openJobPopup">تقديم الوظائف</button>
-  </div>
-
-  <!-- Job Selection Popup -->
-  <div class="popup" id="jobPopup">
-    <h2>اختر الوظيفة</h2>
-    <button class="button" onclick="openJobForm('وزارة الداخلية')">وزارة الداخلية</button>
-    <button class="button" onclick="openJobForm('وزارة العدل')">وزارة العدل</button>
-    <button class="button" onclick="openJobForm('وزارة التجارة')">وزارة التجارة</button>
-    <button class="button" onclick="openJobForm('وزارة الصحة')">وزارة الصحة</button>
-    <button class="close-btn" onclick="closePopup()">إغلاق</button>
-  </div>
-
-  <!-- Job Form Popup -->
-  <div class="popup" id="jobFormPopup">
-    <h2 id="jobTitle">نموذج تقديم لوظيفة</h2>
-    <form id="jobForm">
-      <label for="discordUsername">يوزر الديسكورد:</label>
-      <input type="text" id="discordUsername" name="discordUsername" placeholder="أدخل يوزر الديسكورد" required>
-
-      <label for="characterName">اسم الشخصية:</label>
-      <input type="text" id="characterName" name="characterName" placeholder="أدخل اسم الشخصية" required>
-
-      <label for="extraQuestion">السؤال الإضافي:</label>
-      <input type="text" id="extraQuestion" name="extraQuestion" placeholder="إضافة سؤال حسب الوظيفة" required>
-
-      <button type="submit" class="button">إرسال التقديم</button>
-    </form>
-    <button class="close-btn" onclick="closePopup()">إغلاق</button>
-  </div>
-
-  <!-- Success Popup -->
-  <div class="popup" id="successPopup">
-    <div class="checkmark">
-      <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="45" stroke="green" stroke-width="5" fill="none" />
-        <path fill="none" stroke="green" stroke-width="5" d="M35 50 L45 60 L65 40" />
-      </svg>
+<header>
+    <h1>Ghost City</h1>
+    <div>
+        <a href="#" class="button" id="openModal">تقديم الوظائف</a>
+        <a href="#" class="button" id="closeModal">إغلاق</a>
     </div>
-    <h2>تم إرسال تقديمك!</h2>
-    <p>سيتم التواصل معك في الخاص عبر ديسكورد.</p>
-    <button class="close-btn" onclick="closeSuccessPopup()">إغلاق</button>
-  </div>
+</header>
 
-  <script>
-    const openJobPopupBtn = document.getElementById('openJobPopup');
-    const jobPopup = document.getElementById('jobPopup');
-    const jobFormPopup = document.getElementById('jobFormPopup');
-    const successPopup = document.getElementById('successPopup');
-    const jobForm = document.getElementById('jobForm');
-    const jobTitle = document.getElementById('jobTitle');
+<div class="content">
+    <h2>مرحبًا في Ghost City</h2>
+    <p>اختَر الوظيفة المفضلة لديك لتقديم طلب.</p>
+</div>
 
-    // Open the Job Selection Popup
-    openJobPopupBtn.addEventListener('click', () => {
-      jobPopup.style.display = 'block';
+<div class="modal" id="jobModal">
+    <h2>تقديم على وظيفة</h2>
+    <form id="jobForm">
+        <label for="discordUser">يوزر Discord:</label>
+        <input type="text" id="discordUser" name="discordUser" placeholder="أدخل يوزر Discord" required>
+
+        <label for="jobSelection">الوظيفة:</label>
+        <select id="jobSelection" name="jobSelection" required>
+            <option value="ministryInterior">وزارة الداخلية</option>
+            <option value="ministryJustice">وزارة العدل</option>
+            <option value="ministryHealth">وزارة الصحة</option>
+            <option value="ministryCommerce">وزارة التجارة</option>
+        </select>
+
+        <label for="characterName">اسم الشخصية:</label>
+        <input type="text" id="characterName" name="characterName" placeholder="أدخل اسم الشخصية" required>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" id="acceptTerms" required> أوافق على الشروط والأحكام
+            </label>
+        </div>
+
+        <button type="submit" class="submit-btn">إرسال الطلب</button>
+    </form>
+</div>
+
+<div class="modal" id="confirmationModal">
+    <h2>تم إرسال تقديمك</h2>
+    <p>سيتم التواصل معك عبر الخاص على Discord.</p>
+    <button class="button button-close" id="closeConfirmationModal">إغلاق</button>
+</div>
+
+<footer>
+    <p>&copy; 2025 Ghost City - جميع الحقوق محفوظة</p>
+</footer>
+
+<script>
+    document.getElementById('openModal').addEventListener('click', function() {
+        document.getElementById('jobModal').classList.add('active');
     });
 
-    // Close Popup
-    function closePopup() {
-      jobPopup.style.display = 'none';
-      jobFormPopup.style.display = 'none';
-    }
-
-    // Open Job Form based on selected job
-    function openJobForm(job) {
-      jobPopup.style.display = 'none';
-      jobFormPopup.style.display = 'block';
-      jobTitle.innerHTML = `نموذج تقديم لوظيفة ${job}`;
-      
-      // Modify form questions based on the selected job
-      const extraQuestionInput = document.getElementById('extraQuestion');
-      if (job === 'وزارة الداخلية') {
-        extraQuestionInput.placeholder = "أدخل سؤال خاص بوزارة الداخلية";
-      } else if (job === 'وزارة العدل') {
-        extraQuestionInput.placeholder = "أدخل سؤال خاص بوزارة العدل";
-      } else if (job === 'وزارة التجارة') {
-        extraQuestionInput.placeholder = "أدخل سؤال خاص بوزارة التجارة";
-      } else if (job === 'وزارة الصحة') {
-        extraQuestionInput.placeholder = "أدخل سؤال خاص بوزارة الصحة";
-      }
-    }
-
-    // Handle form submission
-    jobForm.addEventListener('submit', (event) => {
-      event.preventDefault();
-
-      const discordUsername = document.getElementById('discordUsername').value;
-      const characterName = document.getElementById('characterName').value;
-      const extraQuestion = document.getElementById('extraQuestion').value;
-
-      // Send data to Discord Webhook
-      const webhookURL = 'https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw';
-      
-      const payload = {
-        username: discordUsername,
-        content: `تم تقديم طلب وظيفة من قبل ${discordUsername} (اسم الشخصية: ${characterName}).\nالسؤال الإضافي: ${extraQuestion}`
-      };
-
-      fetch(webhookURL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-      })
-      .then(response => response.json())
-      .then(data => {
-        jobFormPopup.style.display = 'none';
-        successPopup.style.display = 'block';
-      })
-      .catch(error => {
-        console.error('Error sending webhook:', error);
-      });
+    document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('jobModal').classList.remove('active');
     });
 
-    // Close Success Popup
-    function closeSuccessPopup() {
-      successPopup.style.display = 'none';
-    }
-  </script>
+    document.getElementById('jobForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const discordUser = document.getElementById('discordUser').value;
+        const jobSelection = document.getElementById('jobSelection').value;
+        const characterName = document.getElementById('characterName').value;
+
+        const webhookUrl = 'https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw';
+        const data = {
+            content: `تم تقديم طلب وظيفة من قبل: \n**يوزر Discord:** ${discordUser}\n**الوظيفة:** ${jobSelection}\n**اسم الشخصية:** ${characterName}`
+        };
+
+        fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(() => {
+            document.getElementById('jobModal').classList.remove('active');
+            document.getElementById('confirmationModal').classList.add('active');
+        })
+        .catch(error => {
+            alert('حدث خطأ أثناء إرسال البيانات. يرجى المحاولة مرة أخرى.');
+        });
+    });
+
+    document.getElementById('closeConfirmationModal').addEventListener('click', function() {
+        document.getElementById('confirmationModal').classList.remove('active');
+    });
+</script>
 
 </body>
 </html>
