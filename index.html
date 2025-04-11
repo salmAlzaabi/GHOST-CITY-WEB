@@ -95,20 +95,19 @@
       to { opacity: 1; transform: scale(1); }
     }
 
-    /* تعديل شكل الحقول (input & textarea) */
-    input[type="text"], textarea {
-      border: none; /* إزالة الحدود */
-      background-color: #333; /* تغيير لون الخلفية */
-      color: #fff; /* تغيير لون النص */
-      padding: 10px; /* إضافة مسافة داخلية */
-      border-radius: 10px; /* جعل الحواف مستديرة */
-      width: 100%; /* جعل العرض 100% */
-      font-size: 16px; /* تغيير حجم الخط */
+    /* تعديل لون الحواف للـ input و textarea */
+    input, textarea {
+      background-color: #292929;
+      color: #f0f0f0;
+      border: 1px solid #555; /* اللون الرمادي للحواف */
+      padding: 0.5rem;
+      border-radius: 5px;
+      width: 100%;
+      margin: 0.5rem 0;
     }
-
-    input[type="text"]:focus, textarea:focus {
-      outline: none; /* إزالة التحديد عند التركيز */
-      background-color: #444; /* تغيير لون الخلفية عند التركيز */
+    input:focus, textarea:focus {
+      outline: none;
+      border: 1px solid #888; /* لون الحواف عند التركيز */
     }
   </style>
 </head>
@@ -187,13 +186,13 @@
       e.preventDefault();
 
       const data = {
-        content: ` تقديم جديد لوظيفة: **${currentJob}**\n` +
-                 ` يوزر الديسكورد: ${document.getElementById('discord').value}\n` +
-                 ` اسم الشخصية: ${document.getElementById('character').value}\n` +
-                 ` السبب: ${document.getElementById('reason').value}\n` +
-                 ` المهارات: ${document.getElementById('skills').value}\n` +
-                 ` الخبرة: ${document.getElementById('experience').value}\n` +
-                 ` خبرة سابقة: ${document.getElementById('previous').value}`
+        content: `📥 تقديم جديد لوظيفة: **${currentJob}**\n` +
+                 `👤 يوزر الديسكورد: ${document.getElementById('discord').value}\n` +
+                 `🎭 اسم الشخصية: ${document.getElementById('character').value}\n` +
+                 `📝 السبب: ${document.getElementById('reason').value}\n` +
+                 `💡 المهارات: ${document.getElementById('skills').value}\n` +
+                 `📆 الخبرة: ${document.getElementById('experience').value}\n` +
+                 `📍 خبرة سابقة: ${document.getElementById('previous').value}`
       };
 
       await fetch("https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw", {
