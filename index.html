@@ -126,7 +126,7 @@
           <small>⚠️ تأكد من صحة اليوزر، لأنه سيتم إرسال القبول عليه في الخاص.</small><br><br>
           <label>اسم الشخصية (رول بلي):<br><input type="text" id="character" required></label><br><br>
           <label>لماذا تريد الانضمام إلى هذه الوزارة؟<br><textarea id="reason" required></textarea></label><br><br>
-          <label>ما هي المهارات التي تمتلكها؟<br><textarea id="skills" required></textarea></label><br><br>
+          <label>ما هي المهارات التي تمتلكها؟<br><textarea id="skills" required></textarea><br><br>
           <label>كم لديك من الخبرة في هذا المجال؟<br><input type="text" id="experience" required></label><br><br>
           <label>هل سبق لك العمل في مكان مشابه؟<br><input type="text" id="previous" required></label><br><br>
           <button type="submit">إرسال الطلب</button>
@@ -171,13 +171,13 @@
       e.preventDefault();
 
       const data = {
-        content: `📥 تقديم جديد لوظيفة: **${currentJob}**\n` +
-                 `👤 يوزر الديسكورد: ${document.getElementById('discord').value}\n` +
-                 `🎭 اسم الشخصية: ${document.getElementById('character').value}\n` +
-                 `📝 السبب: ${document.getElementById('reason').value}\n` +
-                 `💡 المهارات: ${document.getElementById('skills').value}\n` +
-                 `📆 الخبرة: ${document.getElementById('experience').value}\n` +
-                 `📍 خبرة سابقة: ${document.getElementById('previous').value}`
+        content: `تم تقديم طلب جديد لوظيفة: **${currentJob}**\n` +
+                 `يوزر الديسكورد: ${document.getElementById('discord').value}\n` +
+                 `اسم الشخصية: ${document.getElementById('character').value}\n` +
+                 `السبب: ${document.getElementById('reason').value}\n` +
+                 `المهارات: ${document.getElementById('skills').value}\n` +
+                 `الخبرة: ${document.getElementById('experience').value}\n` +
+                 `خبرة سابقة: ${document.getElementById('previous').value}`
       };
 
       await fetch("https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw", {
