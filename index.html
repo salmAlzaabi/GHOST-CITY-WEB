@@ -1,270 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ghost City</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        /* General Styles */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #1d1d1d; /* Dark background */
-            color: #ffffff; /* Light text */
-            margin: 0;
-            padding: 0;
-            height: 100%;
-        }
+import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Monitor, Shield, Siren, Users, Search, MessageSquare } from "lucide-react";
 
-        header {
-            background-color: #222222; /* Dark header */
-            padding: 20px;
-            text-align: center;
-        }
+export default function MDTPoliceHome() {
+  return (
+    <div className="min-h-screen bg-gray-100 text-gray-800 p-6">
+      <h1 className="text-4xl font-bold mb-8 text-center text-blue-900">
+        MDT POLICE GHOST CITY
+      </h1>
 
-        header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            color: #ffffff;
-        }
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <Card className="hover:shadow-xl cursor-pointer">
+          <CardContent className="p-6 flex flex-col items-center">
+            <Shield className="w-10 h-10 text-blue-700 mb-2" />
+            <span>نظام الرتب والصلاحيات</span>
+          </CardContent>
+        </Card>
 
-        /* Navigation Bar */
-        nav {
-            background-color: #333333;
-            padding: 10px 0;
-            text-align: right;
-        }
+        <Card className="hover:shadow-xl cursor-pointer">
+          <CardContent className="p-6 flex flex-col items-center">
+            <Siren className="w-10 h-10 text-red-600 mb-2" />
+            <span>إدارة البلاغات</span>
+          </CardContent>
+        </Card>
 
-        nav a {
-            color: #ffffff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 1.2rem;
-        }
+        <Card className="hover:shadow-xl cursor-pointer">
+          <CardContent className="p-6 flex flex-col items-center">
+            <Users className="w-10 h-10 text-green-700 mb-2" />
+            <span>إدارة المستخدمين</span>
+          </CardContent>
+        </Card>
 
-        nav a:hover {
-            color: #aaa;
-        }
+        <Card className="hover:shadow-xl cursor-pointer">
+          <CardContent className="p-6 flex flex-col items-center">
+            <Search className="w-10 h-10 text-purple-700 mb-2" />
+            <span>البحث عن المطلوبين</span>
+          </CardContent>
+        </Card>
 
-        /* Button Styles */
-        .button {
-            background-color: #444444;
-            color: #fff;
-            padding: 12px 30px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: center;
-        }
+        <Card className="hover:shadow-xl cursor-pointer">
+          <CardContent className="p-6 flex flex-col items-center">
+            <Monitor className="w-10 h-10 text-gray-700 mb-2" />
+            <span>نظام التقديمات</span>
+          </CardContent>
+        </Card>
 
-        .button:hover {
-            background-color: #555555;
-        }
-
-        /* Section Styles */
-        section {
-            padding: 50px;
-            text-align: center;
-        }
-
-        section h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        section p {
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-        }
-
-        /* Modal (Pop-Up) */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding-top: 60px;
-        }
-
-        .modal-content {
-            background-color: #333333;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-            text-align: left;
-            color: #fff;
-        }
-
-        .modal-content input,
-        .modal-content textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            background-color: #222222;
-            color: #fff;
-        }
-
-        .modal-content button {
-            padding: 12px 25px;
-            background-color: #444444;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        .modal-content button:hover {
-            background-color: #555555;
-        }
-
-        /* Close Button */
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <h1>Ghost City</h1>
-    </header>
-
-    <!-- Navigation -->
-    <nav>
-        <a href="#" class="button" id="openModalBtn">تقديم الوظائف</a>
-    </nav>
-
-    <!-- Main Section -->
-    <section>
-        <h2>مرحبًا بك في Ghost City</h2>
-        <p>نحن نقدم لك الفرصة لتكون جزءًا من عالمنا الافتراضي. اختر الوظيفة التي تناسبك وابدأ مغامرتك معنا.</p>
-    </section>
-
-    <!-- Modal for Job Submission -->
-    <div id="jobModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>استمارة تقديم طلب</h2>
-
-            <label for="discordUser">يوزرك دسكورد:</label>
-            <input type="text" id="discordUser" placeholder="أدخل يوزرك دسكورد">
-
-            <label for="name">اسمك:</label>
-            <input type="text" id="name" placeholder="أدخل اسمك">
-
-            <label for="age">عمرك:</label>
-            <input type="number" id="age" placeholder="أدخل عمرك">
-
-            <label for="reason">سبب تقديمك:</label>
-            <textarea id="reason" placeholder="أدخل سبب تقديمك"></textarea>
-
-            <label for="whatWillYouOffer">ماذا ستقدم:</label>
-            <textarea id="whatWillYouOffer" placeholder="أدخل ماذا ستقدم"></textarea>
-
-            <label for="ambition">طموحك:</label>
-            <textarea id="ambition" placeholder="أدخل طموحك"></textarea>
-
-            <label for="confirmation">هل أنت متأكد من تقديمك؟</label>
-            <input type="checkbox" id="confirmation"> نعم، أنا متأكد
-
-            <button id="submitBtn" class="button">تقديم</button>
-        </div>
+        <Card className="hover:shadow-xl cursor-pointer">
+          <CardContent className="p-6 flex flex-col items-center">
+            <MessageSquare className="w-10 h-10 text-yellow-600 mb-2" />
+            <span>الدردشة الداخلية</span>
+          </CardContent>
+        </Card>
+      </div>
     </div>
-
-    <!-- Success Message Modal -->
-    <div id="successModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeSuccessModal">&times;</span>
-            <h2>تم إرسال تقديمك!</h2>
-            <p>سيتم التواصل معك في الخاص عبر دسكورد. شكرًا لتقديمك!</p>
-            <button id="closeBtn" class="button">إغلاق</button>
-        </div>
-    </div>
-
-    <script>
-        // Modal Script
-        var modal = document.getElementById("jobModal");
-        var btn = document.getElementById("openModalBtn");
-        var span = document.getElementsByClassName("close")[0];
-        var submitBtn = document.getElementById("submitBtn");
-        var successModal = document.getElementById("successModal");
-        var closeSuccessModal = document.getElementById("closeSuccessModal");
-        var closeBtn = document.getElementById("closeBtn");
-
-        // Open the modal when "تقديم الوظائف" button is clicked
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-
-        // Close the modal when "×" is clicked
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // Close the success modal
-        closeSuccessModal.onclick = function() {
-            successModal.style.display = "none";
-        }
-
-        // Close the success modal and reset form when "إغلاق" is clicked
-        closeBtn.onclick = function() {
-            successModal.style.display = "none";
-            modal.style.display = "none";
-        }
-
-        // Handle form submission
-        submitBtn.onclick = function() {
-            var discordUser = document.getElementById("discordUser").value;
-            var name = document.getElementById("name").value;
-            var age = document.getElementById("age").value;
-            var reason = document.getElementById("reason").value;
-            var whatWillYouOffer = document.getElementById("whatWillYouOffer").value;
-            var ambition = document.getElementById("ambition").value;
-            var confirmation = document.getElementById("confirmation").checked;
-
-            // If all fields are filled
-            if (discordUser && name && age && reason && whatWillYouOffer && ambition && confirmation) {
-                // Display success modal
-                modal.style.display = "none";
-                successModal.style.display = "block";
-
-                // Send the data to the Discord Webhook (with your provided Webhook URL)
-                var webhookURL = "https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw";
-                var requestData = {
-                    content: `**New Job Application**\nDiscord User: ${discordUser}\nName: ${name}\nAge: ${age}\nReason: ${reason}\nWhat Will You Offer: ${whatWillYouOffer}\nAmbition: ${ambition}`
-                };
-                fetch(webhookURL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(requestData)
-                });
-            } else {
-                alert("Please fill out all fields and confirm your submission.");
-            }
-        }
-    </script>
-</body>
-</html>
+  );
+}
