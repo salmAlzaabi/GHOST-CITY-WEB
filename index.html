@@ -1,193 +1,269 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ghost City - تقديم الوظائف</title>
+    <title>Ghost City</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
+        /* General Styles */
         body {
-            background-color: #181818;
-            color: #fff;
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
+            background-color: #1d1d1d; /* Dark background */
+            color: #ffffff; /* Light text */
             margin: 0;
             padding: 0;
+            height: 100%;
         }
+
         header {
-            text-align: center;
+            background-color: #222222; /* Dark header */
             padding: 20px;
-            background-color: #333;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
+            text-align: center;
         }
+
         header h1 {
             margin: 0;
+            font-size: 2.5rem;
+            color: #ffffff;
         }
-        .btn {
-            padding: 10px 20px;
-            background-color: #666;
+
+        /* Navigation Bar */
+        nav {
+            background-color: #333333;
+            padding: 10px 0;
+            text-align: right;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2rem;
+        }
+
+        nav a:hover {
+            color: #aaa;
+        }
+
+        /* Button Styles */
+        .button {
+            background-color: #444444;
             color: #fff;
+            padding: 12px 30px;
+            font-size: 1.2rem;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
-            margin: 10px;
-        }
-        .btn:hover {
-            background-color: #888;
-        }
-        .content {
-            margin-top: 80px;
-            padding: 20px;
-        }
-        .job-selection {
-            margin-top: 20px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-        .job-selection div {
-            background-color: #444;
-            padding: 20px;
             text-align: center;
-            cursor: pointer;
         }
-        .job-selection div:hover {
-            background-color: #555;
+
+        .button:hover {
+            background-color: #555555;
         }
-        .questions-form {
-            display: none;
-            background-color: #333;
-            padding: 20px;
-            border-radius: 5px;
+
+        /* Section Styles */
+        section {
+            padding: 50px;
+            text-align: center;
         }
-        .questions-form input, .questions-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background-color: #222;
-            color: #fff;
-            border: 1px solid #444;
-            border-radius: 5px;
+
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
         }
-        .questions-form button {
-            background-color: #888;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
+
+        section p {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
         }
-        .questions-form button:hover {
-            background-color: #999;
-        }
-        .popup {
+
+        /* Modal (Pop-Up) */
+        .modal {
             display: none;
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #333;
-            padding: 30px;
-            border-radius: 10px;
-            z-index: 999;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding-top: 60px;
         }
-        .popup p {
-            text-align: center;
-        }
-        .popup button {
-            display: block;
-            margin: 0 auto;
-            padding: 10px 20px;
-            background-color: #888;
+
+        .modal-content {
+            background-color: #333333;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            text-align: left;
             color: #fff;
+        }
+
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #222222;
+            color: #fff;
+        }
+
+        .modal-content button {
+            padding: 12px 25px;
+            background-color: #444444;
             border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .modal-content button:hover {
+            background-color: #555555;
+        }
+
+        /* Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
             cursor: pointer;
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
         <h1>Ghost City</h1>
-        <button class="btn" id="showJobsBtn">تقديم الوظائف</button>
     </header>
-    <div class="content" id="jobPage" style="display: none;">
-        <div class="job-selection">
-            <div onclick="showJobForm('وزارة الداخلية')">وزارة الداخلية</div>
-            <div onclick="showJobForm('وزارة العدل')">وزارة العدل</div>
-            <div onclick="showJobForm('وزارة التجارة')">وزارة التجارة</div>
-            <div onclick="showJobForm('وزارة الصحة')">وزارة الصحة</div>
-        </div>
-        <div class="questions-form" id="jobForm">
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="button" id="openModalBtn">تقديم الوظائف</a>
+    </nav>
+
+    <!-- Main Section -->
+    <section>
+        <h2>مرحبًا بك في Ghost City</h2>
+        <p>نحن نقدم لك الفرصة لتكون جزءًا من عالمنا الافتراضي. اختر الوظيفة التي تناسبك وابدأ مغامرتك معنا.</p>
+    </section>
+
+    <!-- Modal for Job Submission -->
+    <div id="jobModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
             <h2>استمارة تقديم طلب</h2>
-            <form id="jobFormContent">
-                <label>يوزرك دسكورد:</label>
-                <input type="text" id="discordUser" required>
-                <label>اسمك:</label>
-                <input type="text" id="name" required>
-                <label>عمرك:</label>
-                <input type="number" id="age" required>
-                <label>سبب تقديمك:</label>
-                <textarea id="reason" required></textarea>
-                <label>ماذا ستقدم:</label>
-                <textarea id="whatWillOffer" required></textarea>
-                <label>طموحك:</label>
-                <textarea id="ambition" required></textarea>
-                <label>هل أنت متأكد من تقديمك؟</label>
-                <input type="checkbox" id="confirm" required>
-                <button type="submit">تقديم</button>
-            </form>
+
+            <label for="discordUser">يوزرك دسكورد:</label>
+            <input type="text" id="discordUser" placeholder="أدخل يوزرك دسكورد">
+
+            <label for="name">اسمك:</label>
+            <input type="text" id="name" placeholder="أدخل اسمك">
+
+            <label for="age">عمرك:</label>
+            <input type="number" id="age" placeholder="أدخل عمرك">
+
+            <label for="reason">سبب تقديمك:</label>
+            <textarea id="reason" placeholder="أدخل سبب تقديمك"></textarea>
+
+            <label for="whatWillYouOffer">ماذا ستقدم:</label>
+            <textarea id="whatWillYouOffer" placeholder="أدخل ماذا ستقدم"></textarea>
+
+            <label for="ambition">طموحك:</label>
+            <textarea id="ambition" placeholder="أدخل طموحك"></textarea>
+
+            <label for="confirmation">هل أنت متأكد من تقديمك؟</label>
+            <input type="checkbox" id="confirmation"> نعم، أنا متأكد
+
+            <button id="submitBtn" class="button">تقديم</button>
         </div>
     </div>
 
-    <div class="popup" id="popup">
-        <p>تم إرسال طلبك، سيتم التواصل معك في الخاص عبر Discord.</p>
-        <button onclick="closePopup()">إغلاق</button>
+    <!-- Success Message Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeSuccessModal">&times;</span>
+            <h2>تم إرسال تقديمك!</h2>
+            <p>سيتم التواصل معك في الخاص عبر دسكورد. شكرًا لتقديمك!</p>
+            <button id="closeBtn" class="button">إغلاق</button>
+        </div>
     </div>
 
     <script>
-        const showJobsBtn = document.getElementById("showJobsBtn");
-        const jobPage = document.getElementById("jobPage");
-        const jobForm = document.getElementById("jobForm");
-        const popup = document.getElementById("popup");
+        // Modal Script
+        var modal = document.getElementById("jobModal");
+        var btn = document.getElementById("openModalBtn");
+        var span = document.getElementsByClassName("close")[0];
+        var submitBtn = document.getElementById("submitBtn");
+        var successModal = document.getElementById("successModal");
+        var closeSuccessModal = document.getElementById("closeSuccessModal");
+        var closeBtn = document.getElementById("closeBtn");
 
-        showJobsBtn.addEventListener("click", function() {
-            jobPage.style.display = "block";
-        });
-
-        function showJobForm(jobName) {
-            jobForm.style.display = "block";
-            jobForm.querySelector("h2").textContent = `استمارة تقديم طلب - ${jobName}`;
+        // Open the modal when "تقديم الوظائف" button is clicked
+        btn.onclick = function() {
+            modal.style.display = "block";
         }
 
-        document.getElementById("jobFormContent").addEventListener("submit", function(event) {
-            event.preventDefault();
-            const discordUser = document.getElementById("discordUser").value;
-            const name = document.getElementById("name").value;
-            const age = document.getElementById("age").value;
-            const reason = document.getElementById("reason").value;
-            const whatWillOffer = document.getElementById("whatWillOffer").value;
-            const ambition = document.getElementById("ambition").value;
-            const jobName = jobForm.querySelector("h2").textContent.split(' - ')[1]; // Get the job name
-
-            sendToDiscord(discordUser, name, age, reason, whatWillOffer, ambition, jobName);
-            popup.style.display = "block";
-        });
-
-        function sendToDiscord(discordUser, name, age, reason, whatWillOffer, ambition, jobName) {
-            const webhookURL = 'https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw';
-            const data = {
-                content: `طلب تقديم وظيفة: ${jobName}\nيوزر دسكورد: ${discordUser}\nالاسم: ${name}\nالسن: ${age}\nسبب التقديم: ${reason}\nماذا ستقدم: ${whatWillOffer}\nطموحك: ${ambition}`
-            };
-            fetch(webhookURL, {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: { 'Content-Type': 'application/json' }
-            });
+        // Close the modal when "×" is clicked
+        span.onclick = function() {
+            modal.style.display = "none";
         }
 
-        function closePopup() {
-            popup.style.display = "none";
-            jobForm.style.display = "none";
+        // Close the success modal
+        closeSuccessModal.onclick = function() {
+            successModal.style.display = "none";
+        }
+
+        // Close the success modal and reset form when "إغلاق" is clicked
+        closeBtn.onclick = function() {
+            successModal.style.display = "none";
+            modal.style.display = "none";
+        }
+
+        // Handle form submission
+        submitBtn.onclick = function() {
+            var discordUser = document.getElementById("discordUser").value;
+            var name = document.getElementById("name").value;
+            var age = document.getElementById("age").value;
+            var reason = document.getElementById("reason").value;
+            var whatWillYouOffer = document.getElementById("whatWillYouOffer").value;
+            var ambition = document.getElementById("ambition").value;
+            var confirmation = document.getElementById("confirmation").checked;
+
+            // If all fields are filled
+            if (discordUser && name && age && reason && whatWillYouOffer && ambition && confirmation) {
+                // Display success modal
+                modal.style.display = "none";
+                successModal.style.display = "block";
+
+                // Send the data to the Discord Webhook (with your provided Webhook URL)
+                var webhookURL = "https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw";
+                var requestData = {
+                    content: `**New Job Application**\nDiscord User: ${discordUser}\nName: ${name}\nAge: ${age}\nReason: ${reason}\nWhat Will You Offer: ${whatWillYouOffer}\nAmbition: ${ambition}`
+                };
+                fetch(webhookURL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(requestData)
+                });
+            } else {
+                alert("Please fill out all fields and confirm your submission.");
+            }
         }
     </script>
 </body>
