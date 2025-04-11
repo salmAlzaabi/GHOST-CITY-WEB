@@ -52,7 +52,7 @@
             font-size: 1.5rem;
         }
         .content .section button {
-            background-color: #333;
+            background-color: #808080;  /* تغيير اللون إلى الرمادي */
             color: white;
             padding: 10px;
             border: none;
@@ -61,7 +61,7 @@
             text-align: center;
         }
         .content .section button:hover {
-            background-color: #444;
+            background-color: #999999;  /* تغيير اللون عند التمرير */
         }
         .modal {
             display: none;
@@ -135,13 +135,27 @@
     <!-- Modal for Job Submission -->
     <div class="modal" id="jobModal">
         <div class="modal-content">
-            <h3>أدخل بياناتك للتقديم على وظيفة <span id="jobTitle"></span></h3>
-            <label for="discordUser">يوزر الديسكورد:</label>
+            <h3>استمارة تقديم طلب لوظيفة <span id="jobTitle"></span></h3>
+            <label for="discordUser">يوزرك دسكورد:</label>
             <input type="text" id="discordUser" placeholder="ادخل يوزر الديسكورد">
-            <label for="characterName">اسم الشخصية:</label>
+            <label for="characterName">اسمك:</label>
             <input type="text" id="characterName" placeholder="ادخل اسم الشخصية">
+            <label for="age">عمرك:</label>
+            <input type="number" id="age" placeholder="ادخل عمرك">
+            <label for="reason">سبب تقديمك:</label>
+            <input type="text" id="reason" placeholder="سبب تقديمك للوظيفة">
+            <label for="offer">ماذا ستقدم:</label>
+            <input type="text" id="offer" placeholder="ماذا ستقدم في الوظيفة">
+            <label for="ambition">طموحك:</label>
+            <input type="text" id="ambition" placeholder="طموحك في الوظيفة">
+            <label for="confirm">هل أنت متأكد من تقديمك؟</label>
+            <select id="confirm">
+                <option value="نعم">نعم</option>
+                <option value="لا">لا</option>
+            </select>
             <button onclick="submitApplication()">تقديم</button>
             <div id="errorMessage" style="color: red; display: none;">الرجاء تعبئة جميع الحقول</div>
+            <button class="close" onclick="closeJobModal()">الخروج</button>
         </div>
     </div>
 
@@ -168,21 +182,26 @@
         function submitApplication() {
             const discordUser = document.getElementById('discordUser').value;
             const characterName = document.getElementById('characterName').value;
+            const age = document.getElementById('age').value;
+            const reason = document.getElementById('reason').value;
+            const offer = document.getElementById('offer').value;
+            const ambition = document.getElementById('ambition').value;
+            const confirm = document.getElementById('confirm').value;
 
-            if (!discordUser || !characterName) {
+            if (!discordUser || !characterName || !age || !reason || !offer || !ambition || confirm === "لا") {
                 document.getElementById('errorMessage').style.display = 'block';
             } else {
                 document.getElementById('errorMessage').style.display = 'none';
-                sendToDiscord(discordUser, characterName);
+                sendToDiscord(discordUser, characterName, age, reason, offer, ambition, confirm);
                 closeJobModal();
                 showSuccessModal();
             }
         }
 
-        function sendToDiscord(discordUser, characterName) {
+        function sendToDiscord(discordUser, characterName, age, reason, offer, ambition, confirm) {
             const webhookUrl = "https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw"; // Replace with your webhook
             const data = {
-                content: `تم تقديم طلب لوظيفة \nيوزر ديسكورد: ${discordUser} \nاسم الشخصية: ${characterName}`
+                content: `تم تقديم طلب لوظيفة \nيوزر ديسكورد: ${discordUser} \nاسم الشخصية: ${characterName} \nالسن: ${age} \nسبب تقديمك: ${reason} \nماذا ستقدم: ${offer} \nطموحك: ${ambition} \nهل أنت متأكد: ${confirm}`
             };
 
             fetch(webhookUrl, {
@@ -206,6 +225,5 @@
             document.getElementById('successModal').style.display = 'none';
         }
     </script>
-
 </body>
 </html>
