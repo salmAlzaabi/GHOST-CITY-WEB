@@ -4,229 +4,161 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ghost City</title>
-  <link rel="icon" href="https://postimg.cc/WDPmC8nc" type="image/png">
+  <link rel="icon" href="https://postimg.cc/WDPmC8nc" type="image/x-icon">
   <style>
     body {
+      font-family: Arial, sans-serif;
+      background-color: #1f1f1f;
+      color: #fff;
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #121212;
-      color: #f0f0f0;
+      padding: 0;
     }
     header {
-      background-color: #1f1f1f;
-      padding: 1rem;
+      background-color: #333;
+      padding: 10px;
       text-align: center;
     }
-    header h1 {
-      margin: 0;
-      font-size: 3rem;
-      color: #ffffff;
-      cursor: pointer;
-    }
-    header h1:hover {
-      color: #4CAF50;
-    }
-    .container {
-      display: flex;
-      padding: 2rem;
-    }
-    nav {
-      width: 200px;
-      margin-right: 2rem;
-      background-color: #1a1a1a;
-      padding: 1rem;
-      border-radius: 8px;
-    }
-    nav button {
-      display: block;
-      width: 100%;
-      margin: 0.5rem 0;
-      padding: 0.5rem;
-      background-color: #292929;
+    header a {
+      text-decoration: none;
       color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .content {
+      padding: 20px;
+    }
+    input[type="text"], input[type="email"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      background-color: #444;
+      border: 1px solid #555;
+      border-radius: 5px;
+      color: #fff;
+    }
+    button {
+      background-color: #555;
+      color: #fff;
+      padding: 10px 20px;
       border: none;
-      border-radius: 4px;
+      border-radius: 5px;
       cursor: pointer;
     }
-    nav button:hover {
-      background-color: #383838;
+    button:hover {
+      background-color: #777;
     }
-    main {
-      flex-grow: 1;
-      background-color: #1a1a1a;
-      padding: 1rem;
-      border-radius: 8px;
+    .form-container {
+      width: 50%;
+      margin: 0 auto;
+    }
+    .message {
+      background-color: #333;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 20px;
     }
     .hidden {
       display: none;
     }
-    .back-btn {
-      margin-top: 1rem;
-      background-color: #333;
-      color: white;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
+    .admin-panel {
+      margin-top: 40px;
     }
-    .back-btn:hover {
-      background-color: #444;
-    }
-    h2 {
-      border-bottom: 1px solid #333;
-      padding-bottom: 0.5rem;
-    }
-    .popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #222;
-      padding: 2rem;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-      display: none;
-    }
-    .popup img {
-      width: 60px;
-    }
-    .popup.show {
-      display: block;
-      animation: fadeIn 0.4s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* تعديل لون الخانات إلى الرمادي */
-    input[type="text"], input[type="textarea"], textarea {
-      background-color: #444;
-      color: #fff;
-      border: 1px solid #555;
-      border-radius: 4px;
-      width: 100%;
-      padding: 0.5rem;
-    }
-
-    input[type="text"]:focus, textarea:focus {
-      outline: none;
-      border-color: #4CAF50;  /* يمكنك تغيير هذا إلى اللون الذي تريده */
-    }
-
-    button {
-      background-color: #555; /* اللون الرمادي الداكن */
-      color: white;
-      border: none;
-      padding: 0.7rem;
-      border-radius: 4px;
-      cursor: pointer;
-      width: 100%;
-      font-size: 1rem;
-    }
-
-    button:hover {
-      background-color: #666; /* اللون الرمادي الفاتح عند التمرير */
+    .admin-panel button {
+      margin: 10px 0;
     }
   </style>
 </head>
 <body>
   <header>
-    <!-- تأكد من المسار الصحيح للصفحة الرئيسية -->
-    <h1 onclick="window.location.href='index.html';">Ghost City</h1>
+    <a href="index.html">Ghost City</a>
   </header>
-  <div class="container">
-    <nav>
-      <button onclick="showSection('jobsList')">التقديم على الوظائف</button>
-    </nav>
-    <main>
-      <section id="home">
-        <h2>مرحبًا بك في Ghost City</h2>
-        <p>اختر من القائمة للبدء.</p>
-      </section>
+  
+  <div class="content">
+    <div class="form-container">
+      <h2>تقديم على الوظائف</h2>
+      <form id="jobForm">
+        <label for="discordUser">يوزر ديسكورد:</label>
+        <input type="text" id="discordUser" name="discordUser" required>
+        
+        <label for="email">البريد الإلكتروني:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="coverLetter">خطاب التقديم:</label>
+        <textarea id="coverLetter" name="coverLetter" rows="4" required></textarea>
+        
+        <button type="submit">إرسال الطلب</button>
+      </form>
 
-      <section id="jobsList" class="hidden">
-        <h2>اختر الوظيفة</h2>
-        <button onclick="showJobForm('interior')">وزارة الداخلية</button>
-        <button onclick="showJobForm('health')">وزارة الصحة</button>
-        <button onclick="showJobForm('justice')">وزارة العدل</button>
-        <button onclick="showJobForm('commerce')">وزارة التجارة</button>
-        <button class="back-btn" onclick="goBack('home')">رجوع</button>
-      </section>
-
-      <section id="jobForm" class="hidden">
-        <h2 id="jobTitle"></h2>
-        <form id="applicationForm">
-          <label>يوزرك في الديسكورد:<br><input type="text" id="discord" required placeholder="مثال: username#0000"></label>
-          <small>⚠️ تأكد من صحة اليوزر، لأنه سيتم إرسال القبول عليه في الخاص.</small><br><br>
-          <label>اسم الشخصية (رول بلي):<br><input type="text" id="character" required></label><br><br>
-          <label>لماذا تريد الانضمام إلى هذه الوزارة؟<br><textarea id="reason" required></textarea></label><br><br>
-          <label>ما هي المهارات التي تمتلكها؟<br><textarea id="skills" required></textarea></label><br><br>
-          <label>كم لديك من الخبرة في هذا المجال؟<br><input type="text" id="experience" required></label><br><br>
-          <label>هل سبق لك العمل في مكان مشابه؟<br><input type="text" id="previous" required></label><br><br>
-          <button type="submit">إرسال الطلب</button>
-        </form>
-        <button class="back-btn" onclick="goBack('jobsList')">رجوع</button>
-      </section>
-
-      <div id="popup" class="popup">
-        <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="تم">
-        <h3>✅ تم إرسال تقديمك!</h3>
-        <p>سيتم التواصل معك في الخاص على الديسكورد.</p>
+      <div class="message hidden" id="successMessage">
+        تم إرسال تقديمك بنجاح! 🎉
       </div>
-    </main>
+    </div>
+
+    <!-- لوحة التحكم الإدارية -->
+    <div class="admin-panel hidden" id="adminPanel">
+      <h2>إدارة الرتب والصلاحيات</h2>
+      
+      <button id="showRanks">عرض الرتب المتاحة</button>
+      <div class="message hidden" id="ranksList">
+        <p>لا توجد رتب حالياً.</p>
+      </div>
+      
+      <button id="showSettings">إعدادات الرومات والصلاحيات</button>
+      <div class="message hidden" id="settingsPanel">
+        <p>يمكنك هنا إغلاق الرومات أو حذفها.</p>
+      </div>
+    </div>
   </div>
 
   <script>
-    const sections = ['home', 'jobsList', 'jobForm'];
-    let currentJob = '';
+    // إعداد الويب هوك للإرسال
+    const webhookURL = "https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw";
+    
+    document.getElementById("jobForm").addEventListener("submit", function(event) {
+      event.preventDefault();
 
-    function showSection(id) {
-      sections.forEach(sec => document.getElementById(sec).classList.add('hidden'));
-      document.getElementById(id).classList.remove('hidden');
-    }
-
-    function showJobForm(job) {
-      const titles = {
-        interior: 'وزارة الداخلية',
-        health: 'وزارة الصحة',
-        justice: 'وزارة العدل',
-        commerce: 'وزارة التجارة'
-      };
-      currentJob = titles[job];
-      document.getElementById('jobTitle').innerText = titles[job];
-      showSection('jobForm');
-    }
-
-    function goBack(toSection) {
-      showSection(toSection);
-    }
-
-    document.getElementById('applicationForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      const data = {
-        content: `📥 تقديم جديد لوظيفة: **${currentJob}**\n` +
-                 `👤 يوزر الديسكورد: ${document.getElementById('discord').value}\n` +
-                 `🎭 اسم الشخصية: ${document.getElementById('character').value}\n` +
-                 `📝 السبب: ${document.getElementById('reason').value}\n` +
-                 `💡 المهارات: ${document.getElementById('skills').value}\n` +
-                 `📆 الخبرة: ${document.getElementById('experience').value}\n` +
-                 `📍 خبرة سابقة: ${document.getElementById('previous').value}`
+      const discordUser = document.getElementById("discordUser").value;
+      const email = document.getElementById("email").value;
+      const coverLetter = document.getElementById("coverLetter").value;
+      
+      const message = {
+        content: `يوزر ديسكورد: ${discordUser}\nالبريد الإلكتروني: ${email}\nخطاب التقديم: ${coverLetter}`
       };
 
-      await fetch("https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw", {
+      fetch(webhookURL, {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(message)
+      })
+      .then(response => {
+        if (response.ok) {
+          document.getElementById("successMessage").classList.remove("hidden");
+        } else {
+          alert("فشل في إرسال الطلب.");
+        }
       });
+    });
 
-      document.getElementById('applicationForm').reset();
-      document.getElementById('popup').classList.add('show');
-      setTimeout(() => document.getElementById('popup').classList.remove('show'), 4000);
+    // نظام الرتب والصلاحيات
+    const adminRole = "admin"; // تحديد الرتبة التي يحق لها الوصول للإدارة
+
+    const userRole = "admin"; // اختبر الرتبة (يجب ربطها مع النظام في قاعدة بيانات حقيقية)
+
+    // إظهار لوحة الإدارة فقط إذا كانت الرتبة "admin"
+    if (userRole === adminRole) {
+      document.getElementById("adminPanel").classList.remove("hidden");
+    }
+
+    // إدارة الرتب
+    document.getElementById("showRanks").addEventListener("click", function() {
+      document.getElementById("ranksList").classList.remove("hidden");
+    });
+
+    // إعدادات الرومات والصلاحيات
+    document.getElementById("showSettings").addEventListener("click", function() {
+      document.getElementById("settingsPanel").classList.remove("hidden");
     });
   </script>
 </body>
