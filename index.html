@@ -12,13 +12,13 @@
       margin: 0;
       padding: 0;
     }
-    
+
     header {
       background-color: #333;
       padding: 20px;
       text-align: center;
     }
-    
+
     .header-title {
       font-size: 2em;
       color: #fff;
@@ -30,7 +30,7 @@
       top: 20px;
       right: 20px;
     }
-    
+
     .header-nav a {
       color: #fff;
       text-decoration: none;
@@ -49,6 +49,47 @@
       text-align: center;
     }
 
+    h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    /* Styling for "Job Application" section */
+    .job-application-section {
+      margin-top: 40px;
+      text-align: center;
+      padding: 20px;
+      background-color: #444;
+      border-radius: 8px;
+      display: none; /* Initially hidden */
+    }
+
+    .job-application-section.active {
+      display: block;
+    }
+
+    .job-application-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .job-application-section li {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #555;
+      border-radius: 5px;
+    }
+
+    .job-application-section a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .job-application-section a:hover {
+      background-color: #888;
+    }
+
+    /* Form Styles */
     .form-container {
       margin-top: 50px;
       padding: 20px;
@@ -96,34 +137,6 @@
     .message.error {
       color: red;
     }
-
-    /* Added styling for page title */
-    h2 {
-      font-size: 2em;
-      margin-bottom: 20px;
-    }
-
-    /* Styling for "Job Application" section */
-    .job-application-section {
-      margin-top: 40px;
-      text-align: center;
-      padding: 20px;
-      background-color: #444;
-      border-radius: 8px;
-      display: none; /* Initially hidden */
-    }
-
-    .job-application-section.active {
-      display: block;
-    }
-
-    .message.success {
-      color: green;
-    }
-
-    .message.error {
-      color: red;
-    }
   </style>
 </head>
 <body>
@@ -131,7 +144,7 @@
 <header>
   <div class="header-title">Ghost City</div>
   <div class="header-nav">
-    <a href="#job-application-form" id="apply-job-button">تقديم على الوظائف</a>
+    <a href="#" id="apply-job-button">تقديم على الوظائف</a>
   </div>
 </header>
 
@@ -140,76 +153,74 @@
   <p>اضغط على الزر في أعلى يمين الصفحة لتقديم طلبك على الوظائف.</p>
 </div>
 
-<!-- Job Application Form Page -->
-<div id="job-application-form" class="form-container">
-  <h2>تقديم الوظائف</h2>
-  <form id="application-form">
-    <label for="discord-username">يوزر الديسكورد:</label>
-    <input type="text" id="discord-username" name="discord-username" placeholder="أدخل يوزر الديسكورد" required>
-    <small>تأكد من صحة اليوزر لأنه سيتم منحك رتبة الوظيفة على نفس اليوزر.</small>
-    
-    <label for="department">اختيار الوظيفة:</label>
-    <select id="department" name="department" required>
-      <option value="interior">وزارة الداخلية</option>
-      <option value="justice">وزارة العدل</option>
-      <option value="commerce">وزارة التجارة</option>
-      <option value="health">وزارة الصحة</option>
-    </select>
-    
-    <label for="message">معلومات إضافية (اختياري):</label>
-    <textarea id="message" name="message" placeholder="أدخل تفاصيل إضافية إذا كانت لديك."></textarea>
-
-    <button type="submit">إرسال التقديم</button>
-  </form>
-
-  <div id="response-message" class="message"></div>
+<!-- Job Application Section - Initially Hidden -->
+<div id="job-application-section" class="job-application-section">
+  <h2>الوظائف المتاحة</h2>
+  <ul>
+    <li><a href="#interior-ministry">وزارة الداخلية</a></li>
+    <li><a href="#justice-ministry">وزارة العدل</a></li>
+    <li><a href="#commerce-ministry">وزارة التجارة</a></li>
+    <li><a href="#health-ministry">وزارة الصحة</a></li>
+  </ul>
 </div>
 
-<!-- Hidden Job Application Page -->
-<div class="job-application-section" id="job-application-section">
-  <h2>اختيارات الوظائف</h2>
-  <div>
-    <a href="#interior-ministry" class="job-link">وزارة الداخلية</a><br>
-    <a href="#justice-ministry" class="job-link">وزارة العدل</a><br>
-    <a href="#commerce-ministry" class="job-link">وزارة التجارة</a><br>
-    <a href="#health-ministry" class="job-link">وزارة الصحة</a>
-  </div>
+<!-- Job Application Form Section -->
+<div id="job-application-form" class="form-container" style="display: none;">
+  <h2>التقديم على الوظيفة</h2>
+  <form id="job-form">
+    <label for="discord-username">يوزر الديسكورد:</label>
+    <input type="text" id="discord-username" name="discord-username" required>
+    <small>يرجى التأكد من أن اليوزر صحيح، حيث سيتم إرسال القبول على نفس اليوزر.</small>
+    <label for="job-role">اختر الوظيفة:</label>
+    <select id="job-role" name="job-role" required>
+      <option value="interior-ministry">وزارة الداخلية</option>
+      <option value="justice-ministry">وزارة العدل</option>
+      <option value="commerce-ministry">وزارة التجارة</option>
+      <option value="health-ministry">وزارة الصحة</option>
+    </select>
+    <label for="additional-info">معلومات إضافية:</label>
+    <textarea id="additional-info" name="additional-info"></textarea>
+    <button type="submit">تقديم</button>
+  </form>
+  <div class="message" id="form-message"></div>
 </div>
 
 <script>
+  // Toggle Job Application Section visibility
   document.getElementById('apply-job-button').addEventListener('click', function() {
-    document.getElementById('job-application-form').classList.add('active');
+    const jobSection = document.getElementById('job-application-section');
+    jobSection.classList.toggle('active'); // Toggle visibility
   });
 
-  document.getElementById('application-form').addEventListener('submit', function(e) {
+  // Show form when a job is selected
+  document.querySelectorAll('.job-application-section a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const jobForm = document.getElementById('job-application-form');
+      jobForm.style.display = 'block';
+      document.getElementById('job-application-section').style.display = 'none';
+    });
+  });
+
+  // Handle form submission
+  document.getElementById('job-form').addEventListener('submit', function(e) {
     e.preventDefault();
-
     const discordUsername = document.getElementById('discord-username').value;
-    const department = document.getElementById('department').value;
-    const message = document.getElementById('message').value;
-
-    const webhookURL = 'https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw';
-
-    const data = {
-      content: `تقديم جديد:
-        - يوزر الديسكورد: ${discordUsername}
-        - الوظيفة المختارة: ${department}
-        - الرسالة الإضافية: ${message}`,
-    };
-
-    fetch(webhookURL, {
+    const jobRole = document.getElementById('job-role').value;
+    const additionalInfo = document.getElementById('additional-info').value;
+    
+    // Show success message
+    document.getElementById('form-message').innerHTML = 'تم إرسال تقديمك! سيتم التواصل معك عبر الديسكورد.';
+    document.getElementById('form-message').className = 'message success';
+    
+    // Send data to Discord webhook (You can implement this functionality later)
+    const webhookUrl = 'https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw';
+    fetch(webhookUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(() => {
-      document.getElementById('response-message').innerHTML = '<span class="success">تم إرسال تقديمك! سيتم التواصل معك في الخاص.</span>';
-    })
-    .catch(() => {
-      document.getElementById('response-message').innerHTML = '<span class="error">حدث خطأ أثناء إرسال التقديم، حاول مرة أخرى لاحقاً.</span>';
+      body: JSON.stringify({
+        content: `تم تقديم طلب من يوزر ديسكورد: ${discordUsername}\nالوظيفة: ${jobRole}\nمعلومات إضافية: ${additionalInfo}`
+      }),
+      headers: { 'Content-Type': 'application/json' }
     });
   });
 </script>
