@@ -4,177 +4,208 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ghost City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
-            background-color: #1a1a1a;
-            color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #ffffff;
         }
-        header {
+        .header {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
+            background-color: #1f1f1f;
             padding: 20px;
+            position: relative;
         }
-        h1 {
-            font-size: 32px;
+        .header h1 {
+            font-size: 2.5rem;
             color: #fff;
             margin: 0;
         }
-        .header-buttons {
-            display: flex;
-            align-items: center;
-        }
-        .header-buttons a, .button {
-            margin-left: 20px;
-            padding: 10px 20px;
-            background-color: #444;
+        .header .button {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background-color: #4CAF50;
             color: white;
-            text-decoration: none;
+            padding: 10px 20px;
+            border: none;
             border-radius: 5px;
             cursor: pointer;
+        }
+        .header .button:hover {
+            background-color: #45a049;
+        }
+        .content {
+            padding: 20px;
+        }
+        .content .section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .content .section h2 {
+            font-size: 1.5rem;
+        }
+        .content .section button {
+            background-color: #333;
+            color: white;
+            padding: 10px;
             border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
         }
-        .header-buttons a:hover, .button:hover {
-            background-color: #555;
+        .content .section button:hover {
+            background-color: #444;
         }
-        .modal, .form-modal {
+        .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.5);
             justify-content: center;
             align-items: center;
+            z-index: 9999;
         }
-        .modal-content, .form-modal-content {
-            background-color: #333;
+        .modal-content {
+            background-color: #2a2a2a;
             padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 500px;
-            color: white;
-        }
-        .form-modal-content input, .form-modal-content select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background-color: #444;
-            border: none;
-            border-radius: 5px;
-            color: white;
-        }
-        .form-modal-content button {
-            background-color: #777;
-            border: none;
-            padding: 10px;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-            width: 100%;
-        }
-        .form-modal-content button:hover {
-            background-color: #888;
-        }
-        .success-message {
+            border-radius: 8px;
+            color: #fff;
+            width: 400px;
             text-align: center;
         }
-        .success-message .button {
-            margin-top: 20px;
+        .modal-content input,
+        .modal-content select {
+            margin: 10px 0;
+            padding: 8px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #1f1f1f;
+            color: white;
         }
-        .function-button {
-            background-color: #666;
+        .modal-content button {
+            background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
+            border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin: 10px;
         }
-        .function-button:hover {
-            background-color: #777;
+        .modal-content button:hover {
+            background-color: #45a049;
+        }
+        .modal-content .close {
+            background-color: red;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Ghost City</h1>
-        <div class="header-buttons">
-            <a href="#" class="button" id="openJobModal">تقديم الوظائف</a>
-        </div>
-    </header>
 
-    <!-- Job Modal -->
+    <!-- Header -->
+    <div class="header">
+        <h1>Ghost City</h1>
+        <button class="button" onclick="showJobModal()">تقديم الوظائف</button>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <div class="section">
+            <h2>اختر وظيفة</h2>
+            <button onclick="openJobQuestions('وزارة الداخلية')">وزارة الداخلية</button>
+            <button onclick="openJobQuestions('وزارة العدل')">وزارة العدل</button>
+            <button onclick="openJobQuestions('وزارة التجارة')">وزارة التجارة</button>
+            <button onclick="openJobQuestions('وزارة الصحة')">وزارة الصحة</button>
+        </div>
+    </div>
+
+    <!-- Modal for Job Submission -->
     <div class="modal" id="jobModal">
         <div class="modal-content">
-            <h2>الوظائف المتاحة</h2>
-            <ul>
-                <li><button class="function-button" onclick="openJobForm('وزارة الداخلية')">وزارة الداخلية</button></li>
-                <li><button class="function-button" onclick="openJobForm('وزارة العدل')">وزارة العدل</button></li>
-                <li><button class="function-button" onclick="openJobForm('وزارة التجارة')">وزارة التجارة</button></li>
-                <li><button class="function-button" onclick="openJobForm('وزارة الصحة')">وزارة الصحة</button></li>
-            </ul>
-            <button class="button" onclick="closeModal('jobModal')">إغلاق</button>
+            <h3>أدخل بياناتك للتقديم على وظيفة <span id="jobTitle"></span></h3>
+            <label for="discordUser">يوزر الديسكورد:</label>
+            <input type="text" id="discordUser" placeholder="ادخل يوزر الديسكورد">
+            <label for="characterName">اسم الشخصية:</label>
+            <input type="text" id="characterName" placeholder="ادخل اسم الشخصية">
+            <button onclick="submitApplication()">تقديم</button>
+            <div id="errorMessage" style="color: red; display: none;">الرجاء تعبئة جميع الحقول</div>
         </div>
     </div>
 
-    <!-- Form Modal -->
-    <div class="form-modal" id="formModal">
-        <div class="form-modal-content">
-            <h2>استمارة تقديم للوظيفة <span id="jobTitle"></span></h2>
-            <form id="jobForm">
-                <label for="discordUsername">يوزر الديسكورد الخاص بك</label>
-                <input type="text" id="discordUsername" name="discordUsername" placeholder="أدخل يوزر الديسكورد" required>
-                <small>تأكد من صحتك لأن القبول سيتم على نفس اليوزر.</small>
-                <label for="characterName">اسم شخصيتك</label>
-                <input type="text" id="characterName" name="characterName" placeholder="أدخل اسم الشخصية" required>
-                <label for="whyApply">لماذا ترغب في التقديم على هذه الوظيفة؟</label>
-                <textarea id="whyApply" name="whyApply" placeholder="أدخل السبب" required></textarea>
-                <button type="submit" class="button">تقديم</button>
-            </form>
-            <button class="button" onclick="closeModal('formModal')">إغلاق</button>
-        </div>
-    </div>
-
-    <!-- Success Message Modal -->
+    <!-- Success Modal -->
     <div class="modal" id="successModal">
-        <div class="modal-content success-message">
-            <h2>تم إرسال تقديمك</h2>
-            <p>سيتم التواصل معك في الخاص عبر الديسكورد.</p>
-            <button class="button" onclick="closeModal('successModal')">إغلاق</button>
+        <div class="modal-content">
+            <i class="fas fa-check-circle" style="color: green; font-size: 50px;"></i>
+            <h3>تم ارسال تقديمك</h3>
+            <p>سيتم التواصل معك في الخاص عبر ديسكورد.</p>
+            <button class="close" onclick="closeSuccessModal()">إغلاق</button>
         </div>
     </div>
 
     <script>
-        function openJobForm(job) {
-            document.getElementById('jobTitle').innerText = job;
-            document.getElementById('formModal').style.display = 'flex';
-            closeModal('jobModal');
-        }
-
-        document.getElementById('openJobModal').addEventListener('click', function() {
+        function showJobModal() {
             document.getElementById('jobModal').style.display = 'flex';
-        });
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
         }
 
-        document.getElementById('jobForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Handle the form submission (send to webhook or handle further processing)
-            closeModal('formModal');
-            document.getElementById('successModal').style.display = 'flex';
+        function openJobQuestions(jobTitle) {
+            document.getElementById('jobTitle').textContent = jobTitle;
+            showJobModal();
+        }
 
-            // Simulate sending data to Discord webhook
-            fetch('https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw', {
-                method: 'POST',
-                body: JSON.stringify({
-                    content: `تم التقديم على وظيفة: ${document.getElementById('jobTitle').innerText}\nيوزر الديسكورد: ${document.getElementById('discordUsername').value}\nاسم الشخصية: ${document.getElementById('characterName').value}\nلماذا التقديم: ${document.getElementById('whyApply').value}`
-                }),
-                headers: { 'Content-Type': 'application/json' }
+        function submitApplication() {
+            const discordUser = document.getElementById('discordUser').value;
+            const characterName = document.getElementById('characterName').value;
+
+            if (!discordUser || !characterName) {
+                document.getElementById('errorMessage').style.display = 'block';
+            } else {
+                document.getElementById('errorMessage').style.display = 'none';
+                sendToDiscord(discordUser, characterName);
+                closeJobModal();
+                showSuccessModal();
+            }
+        }
+
+        function sendToDiscord(discordUser, characterName) {
+            const webhookUrl = "https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw"; // Replace with your webhook
+            const data = {
+                content: `تم تقديم طلب لوظيفة \nيوزر ديسكورد: ${discordUser} \nاسم الشخصية: ${characterName}`
+            };
+
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
             });
-        });
+        }
+
+        function closeJobModal() {
+            document.getElementById('jobModal').style.display = 'none';
+        }
+
+        function showSuccessModal() {
+            document.getElementById('successModal').style.display = 'flex';
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
     </script>
+
 </body>
 </html>
