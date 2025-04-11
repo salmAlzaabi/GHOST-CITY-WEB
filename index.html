@@ -1,149 +1,217 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ghost City</title>
-    <link rel="icon" href="https://i.imgur.com/WDPmC8nc.png" type="image/png"> <!-- لوجو -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #222;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        header h1 {
-            color: #fff;
-        }
-        .logo {
-            width: 40px;
-            height: 40px;
-        }
-        .header-links {
-            display: flex;
-            gap: 20px;
-        }
-        .header-links a {
-            color: #fff;
-            text-decoration: none;
-        }
-        .content {
-            margin: 20px;
-        }
-        .content h2 {
-            color: #00bcd4;
-        }
-        .form-container {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .input-field, .submit-button {
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            background-color: #333;
-            color: white;
-        }
-        .input-field {
-            background-color: #444;
-        }
-        .submit-button {
-            background-color: #00bcd4;
-            cursor: pointer;
-        }
-        .submit-button:hover {
-            background-color: #0097a7;
-        }
-        .settings-btn {
-            background-color: #ff5722;
-            padding: 5px 10px;
-            border-radius: 5px;
-            color: white;
-            text-decoration: none;
-        }
-        .settings-btn:hover {
-            background-color: #e64a19;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghost City</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1d1d1d; /* Dark background */
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+    
+    header {
+      background-color: #333;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .header-title {
+      font-size: 2em;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .header-nav {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    
+    .header-nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 20px;
+      background-color: #444;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .header-nav a:hover {
+      background-color: #888;
+    }
+
+    .content {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .form-container {
+      margin-top: 50px;
+      padding: 20px;
+      background-color: #333;
+      border-radius: 10px;
+      width: 50%;
+      margin: auto;
+    }
+
+    .form-container input,
+    .form-container select,
+    .form-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      background-color: #555;
+      border: none;
+      border-radius: 5px;
+      color: white;
+    }
+
+    .form-container button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .form-container button:hover {
+      background-color: #0056b3;
+    }
+
+    .message {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    .message.success {
+      color: green;
+    }
+
+    .message.error {
+      color: red;
+    }
+
+    /* Added styling for page title */
+    h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    /* Styling for "Job Application" section */
+    .job-application-section {
+      margin-top: 40px;
+      text-align: center;
+      padding: 20px;
+      background-color: #444;
+      border-radius: 8px;
+      display: none; /* Initially hidden */
+    }
+
+    .job-application-section.active {
+      display: block;
+    }
+
+    .message.success {
+      color: green;
+    }
+
+    .message.error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
 
 <header>
-    <img src="https://i.imgur.com/WDPmC8nc.png" alt="Ghost City Logo" class="logo">
-    <h1>Ghost City</h1>
-    <div class="header-links">
-        <a href="#home">الصفحة الرئيسية</a>
-        <a href="#jobs">الوظائف</a>
-        <a href="#settings" class="settings-btn">الإعدادات</a>
-    </div>
+  <div class="header-title">Ghost City</div>
+  <div class="header-nav">
+    <a href="#job-application-form" id="apply-job-button">تقديم على الوظائف</a>
+  </div>
 </header>
 
 <div class="content">
-    <h2>تقديم طلب</h2>
-    <div class="form-container">
-        <label for="discord-username">يوزر الديسكورد:</label>
-        <input type="text" id="discord-username" class="input-field" placeholder="أدخل يوزر الديسكورد" required>
-        
-        <label for="job-selection">اختر الوظيفة:</label>
-        <select id="job-selection" class="input-field" required>
-            <option value="">اختر الوظيفة</option>
-            <option value="وظيفة1">وظيفة 1</option>
-            <option value="وظيفة2">وظيفة 2</option>
-            <option value="وظيفة3">وظيفة 3</option>
-        </select>
-        
-        <button class="submit-button" onclick="sendToWebhook()">إرسال الطلب</button>
-    </div>
+  <h2>أهلاً بك في Ghost City!</h2>
+  <p>اضغط على الزر في أعلى يمين الصفحة لتقديم طلبك على الوظائف.</p>
+</div>
+
+<!-- Job Application Form Page -->
+<div id="job-application-form" class="form-container">
+  <h2>تقديم الوظائف</h2>
+  <form id="application-form">
+    <label for="discord-username">يوزر الديسكورد:</label>
+    <input type="text" id="discord-username" name="discord-username" placeholder="أدخل يوزر الديسكورد" required>
+    <small>تأكد من صحة اليوزر لأنه سيتم منحك رتبة الوظيفة على نفس اليوزر.</small>
+    
+    <label for="department">اختيار الوظيفة:</label>
+    <select id="department" name="department" required>
+      <option value="interior">وزارة الداخلية</option>
+      <option value="justice">وزارة العدل</option>
+      <option value="commerce">وزارة التجارة</option>
+      <option value="health">وزارة الصحة</option>
+    </select>
+    
+    <label for="message">معلومات إضافية (اختياري):</label>
+    <textarea id="message" name="message" placeholder="أدخل تفاصيل إضافية إذا كانت لديك."></textarea>
+
+    <button type="submit">إرسال التقديم</button>
+  </form>
+
+  <div id="response-message" class="message"></div>
+</div>
+
+<!-- Hidden Job Application Page -->
+<div class="job-application-section" id="job-application-section">
+  <h2>اختيارات الوظائف</h2>
+  <div>
+    <a href="#interior-ministry" class="job-link">وزارة الداخلية</a><br>
+    <a href="#justice-ministry" class="job-link">وزارة العدل</a><br>
+    <a href="#commerce-ministry" class="job-link">وزارة التجارة</a><br>
+    <a href="#health-ministry" class="job-link">وزارة الصحة</a>
+  </div>
 </div>
 
 <script>
-    function sendToWebhook() {
-        const discordUsername = document.getElementById('discord-username').value;
-        const jobSelection = document.getElementById('job-selection').value;
-        
-        if (!discordUsername || !jobSelection) {
-            alert('يرجى ملء جميع الحقول.');
-            return;
-        }
-        
-        const webhookUrl = 'https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw';
-        
-        const data = {
-            content: `طلب تقديم جديد:
-- يوزر الديسكورد: ${discordUsername}
-- الوظيفة المختارة: ${jobSelection}`
-        };
-        
-        fetch(webhookUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('تم إرسال الطلب بنجاح!');
-                document.getElementById('discord-username').value = '';
-                document.getElementById('job-selection').value = '';
-            } else {
-                alert('حدث خطأ أثناء إرسال الطلب. حاول مرة أخرى.');
-            }
-        })
-        .catch(error => {
-            alert('حدث خطأ أثناء إرسال الطلب. حاول مرة أخرى.');
-        });
-    }
+  document.getElementById('apply-job-button').addEventListener('click', function() {
+    document.getElementById('job-application-form').classList.add('active');
+  });
+
+  document.getElementById('application-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const discordUsername = document.getElementById('discord-username').value;
+    const department = document.getElementById('department').value;
+    const message = document.getElementById('message').value;
+
+    const webhookURL = 'https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw';
+
+    const data = {
+      content: `تقديم جديد:
+        - يوزر الديسكورد: ${discordUsername}
+        - الوظيفة المختارة: ${department}
+        - الرسالة الإضافية: ${message}`,
+    };
+
+    fetch(webhookURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(() => {
+      document.getElementById('response-message').innerHTML = '<span class="success">تم إرسال تقديمك! سيتم التواصل معك في الخاص.</span>';
+    })
+    .catch(() => {
+      document.getElementById('response-message').innerHTML = '<span class="error">حدث خطأ أثناء إرسال التقديم، حاول مرة أخرى لاحقاً.</span>';
+    });
+  });
 </script>
 
 </body>
