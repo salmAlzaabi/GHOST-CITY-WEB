@@ -20,6 +20,10 @@
       margin: 0;
       font-size: 3rem;
       color: #ffffff;
+      cursor: pointer;
+    }
+    header h1:hover {
+      color: #bbb;
     }
     .container {
       display: flex;
@@ -94,26 +98,36 @@
       from { opacity: 0; transform: scale(0.9); }
       to { opacity: 1; transform: scale(1); }
     }
-
-    /* تعديل لون الحواف للـ input و textarea */
-    input, textarea {
-      background-color: #292929;
+    .form-input {
+      background-color: #333;
       color: #f0f0f0;
-      border: 1px solid #555; /* اللون الرمادي للحواف */
+      border: 1px solid #444;
       padding: 0.5rem;
-      border-radius: 5px;
+      border-radius: 4px;
       width: 100%;
-      margin: 0.5rem 0;
+      margin-bottom: 1rem;
     }
-    input:focus, textarea:focus {
+    .form-input:focus {
+      border-color: #888;
       outline: none;
-      border: 1px solid #888; /* لون الحواف عند التركيز */
+    }
+    button.submit-btn {
+      background-color: #444;
+      color: #fff;
+      padding: 0.7rem;
+      width: 100%;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button.submit-btn:hover {
+      background-color: #555;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Ghost City</h1>
+    <h1 onclick="window.location.href = '/';">Ghost City</h1> <!-- رابط يعود إلى الصفحة الرئيسية -->
   </header>
   <div class="container">
     <nav>
@@ -127,24 +141,24 @@
 
       <section id="jobsList" class="hidden">
         <h2>اختر الوظيفة</h2>
-        <button onclick="showJobForm('interior')">وزارة الداخلية</button>
-        <button onclick="showJobForm('health')">وزارة الصحة</button>
-        <button onclick="showJobForm('justice')">وزارة العدل</button>
-        <button onclick="showJobForm('commerce')">وزارة التجارة</button>
+        <button onclick="showJobForm('interior')" class="form-input">وزارة الداخلية</button>
+        <button onclick="showJobForm('health')" class="form-input">وزارة الصحة</button>
+        <button onclick="showJobForm('justice')" class="form-input">وزارة العدل</button>
+        <button onclick="showJobForm('commerce')" class="form-input">وزارة التجارة</button>
         <button class="back-btn" onclick="goBack('home')">رجوع</button>
       </section>
 
       <section id="jobForm" class="hidden">
         <h2 id="jobTitle"></h2>
         <form id="applicationForm">
-          <label>يوزرك في الديسكورد:<br><input type="text" id="discord" required placeholder="مثال: username#0000"></label>
+          <label>يوزرك في الديسكورد:<br><input type="text" id="discord" class="form-input" required placeholder="مثال: username#0000"></label>
           <small>⚠️ تأكد من صحة اليوزر، لأنه سيتم إرسال القبول عليه في الخاص.</small><br><br>
-          <label>اسم الشخصية (رول بلي):<br><input type="text" id="character" required></label><br><br>
-          <label>لماذا تريد الانضمام إلى هذه الوزارة؟<br><textarea id="reason" required></textarea></label><br><br>
-          <label>ما هي المهارات التي تمتلكها؟<br><textarea id="skills" required></textarea></label><br><br>
-          <label>كم لديك من الخبرة في هذا المجال؟<br><input type="text" id="experience" required></label><br><br>
-          <label>هل سبق لك العمل في مكان مشابه؟<br><input type="text" id="previous" required></label><br><br>
-          <button type="submit">إرسال الطلب</button>
+          <label>اسم الشخصية (رول بلي):<br><input type="text" id="character" class="form-input" required></label><br><br>
+          <label>لماذا تريد الانضمام إلى هذه الوزارة؟<br><textarea id="reason" class="form-input" required></textarea></label><br><br>
+          <label>ما هي المهارات التي تمتلكها؟<br><textarea id="skills" class="form-input" required></textarea></label><br><br>
+          <label>كم لديك من الخبرة في هذا المجال؟<br><input type="text" id="experience" class="form-input" required></label><br><br>
+          <label>هل سبق لك العمل في مكان مشابه؟<br><input type="text" id="previous" class="form-input" required></label><br><br>
+          <button type="submit" class="submit-btn">إرسال الطلب</button>
         </form>
         <button class="back-btn" onclick="goBack('jobsList')">رجوع</button>
       </section>
