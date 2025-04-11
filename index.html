@@ -110,7 +110,7 @@
         <h1>Ghost City</h1>
         <button class="btn" id="showJobsBtn">تقديم الوظائف</button>
     </header>
-    <div class="content" id="jobPage">
+    <div class="content" id="jobPage" style="display: none;">
         <div class="job-selection">
             <div onclick="showJobForm('وزارة الداخلية')">وزارة الداخلية</div>
             <div onclick="showJobForm('وزارة العدل')">وزارة العدل</div>
@@ -162,15 +162,21 @@
         document.getElementById("jobFormContent").addEventListener("submit", function(event) {
             event.preventDefault();
             const discordUser = document.getElementById("discordUser").value;
+            const name = document.getElementById("name").value;
+            const age = document.getElementById("age").value;
+            const reason = document.getElementById("reason").value;
+            const whatWillOffer = document.getElementById("whatWillOffer").value;
+            const ambition = document.getElementById("ambition").value;
             const jobName = jobForm.querySelector("h2").textContent.split(' - ')[1]; // Get the job name
-            sendToDiscord(discordUser, jobName);
+
+            sendToDiscord(discordUser, name, age, reason, whatWillOffer, ambition, jobName);
             popup.style.display = "block";
         });
 
-        function sendToDiscord(discordUser, jobName) {
+        function sendToDiscord(discordUser, name, age, reason, whatWillOffer, ambition, jobName) {
             const webhookURL = 'https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw';
             const data = {
-                content: `طلب تقديم وظيفة: ${jobName}\nيوزر دسكورد: ${discordUser}`
+                content: `طلب تقديم وظيفة: ${jobName}\nيوزر دسكورد: ${discordUser}\nالاسم: ${name}\nالسن: ${age}\nسبب التقديم: ${reason}\nماذا ستقدم: ${whatWillOffer}\nطموحك: ${ambition}`
             };
             fetch(webhookURL, {
                 method: 'POST',
