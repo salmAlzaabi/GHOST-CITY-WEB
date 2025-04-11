@@ -94,6 +94,22 @@
       from { opacity: 0; transform: scale(0.9); }
       to { opacity: 1; transform: scale(1); }
     }
+
+    /* تعديل شكل الحقول (input & textarea) */
+    input[type="text"], textarea {
+      border: none; /* إزالة الحدود */
+      background-color: #333; /* تغيير لون الخلفية */
+      color: #fff; /* تغيير لون النص */
+      padding: 10px; /* إضافة مسافة داخلية */
+      border-radius: 10px; /* جعل الحواف مستديرة */
+      width: 100%; /* جعل العرض 100% */
+      font-size: 16px; /* تغيير حجم الخط */
+    }
+
+    input[type="text"]:focus, textarea:focus {
+      outline: none; /* إزالة التحديد عند التركيز */
+      background-color: #444; /* تغيير لون الخلفية عند التركيز */
+    }
   </style>
 </head>
 <body>
@@ -126,7 +142,7 @@
           <small>⚠️ تأكد من صحة اليوزر، لأنه سيتم إرسال القبول عليه في الخاص.</small><br><br>
           <label>اسم الشخصية (رول بلي):<br><input type="text" id="character" required></label><br><br>
           <label>لماذا تريد الانضمام إلى هذه الوزارة؟<br><textarea id="reason" required></textarea></label><br><br>
-          <label>ما هي المهارات التي تمتلكها؟<br><textarea id="skills" required></textarea><br><br>
+          <label>ما هي المهارات التي تمتلكها؟<br><textarea id="skills" required></textarea></label><br><br>
           <label>كم لديك من الخبرة في هذا المجال؟<br><input type="text" id="experience" required></label><br><br>
           <label>هل سبق لك العمل في مكان مشابه؟<br><input type="text" id="previous" required></label><br><br>
           <button type="submit">إرسال الطلب</button>
@@ -171,13 +187,13 @@
       e.preventDefault();
 
       const data = {
-        content: `تم تقديم طلب جديد لوظيفة: **${currentJob}**\n` +
-                 `يوزر الديسكورد: ${document.getElementById('discord').value}\n` +
-                 `اسم الشخصية: ${document.getElementById('character').value}\n` +
-                 `السبب: ${document.getElementById('reason').value}\n` +
-                 `المهارات: ${document.getElementById('skills').value}\n` +
-                 `الخبرة: ${document.getElementById('experience').value}\n` +
-                 `خبرة سابقة: ${document.getElementById('previous').value}`
+        content: ` تقديم جديد لوظيفة: **${currentJob}**\n` +
+                 ` يوزر الديسكورد: ${document.getElementById('discord').value}\n` +
+                 ` اسم الشخصية: ${document.getElementById('character').value}\n` +
+                 ` السبب: ${document.getElementById('reason').value}\n` +
+                 ` المهارات: ${document.getElementById('skills').value}\n` +
+                 ` الخبرة: ${document.getElementById('experience').value}\n` +
+                 ` خبرة سابقة: ${document.getElementById('previous').value}`
       };
 
       await fetch("https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw", {
