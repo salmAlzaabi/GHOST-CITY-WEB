@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghost City</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+    }
+    header {
+      background-color: #1f1f1f;
+      padding: 1rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 3rem;
+      color: #ffffff;
+    }
+    .container {
+      display: flex;
+      padding: 2rem;
+    }
+    nav {
+      width: 200px;
+      margin-right: 2rem;
+      background-color: #1a1a1a;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    nav button {
+      display: block;
+      width: 100%;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      background-color: #292929;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    nav button:hover {
+      background-color: #383838;
+    }
+    main {
+      flex-grow: 1;
+      background-color: #1a1a1a;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .hidden {
+      display: none;
+    }
+    .back-btn {
+      margin-top: 1rem;
+      background-color: #333;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .back-btn:hover {
+      background-color: #444;
+    }
+    h2 {
+      border-bottom: 1px solid #333;
+      padding-bottom: 0.5rem;
+    }
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #222;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      display: none;
+    }
+    .popup img {
+      width: 60px;
+    }
+    .popup.show {
+      display: block;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Ghost City</h1>
+  </header>
+  <div class="container">
+    <nav>
+      <button onclick="showSection('jobsList')">التقديم على الوظائف</button>
+    </nav>
+    <main>
+      <section id="home">
+        <h2>مرحبًا بك في Ghost City</h2>
+        <p>اختر من القائمة للبدء.</p>
+      </section>
+
+      <section id="jobsList" class="hidden">
+        <h2>اختر الوظيفة</h2>
+        <button onclick="showJobForm('interior')">وزارة الداخلية</button>
+        <button onclick="showJobForm('health')">وزارة الصحة</button>
+        <button onclick="showJobForm('justice')">وزارة العدل</button>
+        <button onclick="showJobForm('commerce')">وزارة التجارة</button>
+        <button class="back-btn" onclick="goBack('home')">رجوع</button>
+      </section>
+
+      <section id="jobForm" class="hidden">
+        <h2 id="jobTitle"></h2>
+        <form id="applicationForm">
+          <label>يوزرك في الديسكورد:<br><input type="text" id="discord" required placeholder="مثال: username#0000"></label>
+          <small>⚠️ تأكد من صحة اليوزر، لأنه سيتم إرسال القبول عليه في الخاص.</small><br><br>
+          <label>اسم الشخصية (رول بلي):<br><input type="text" id="character" required></label><br><br>
+          <label>لماذا تريد الانضمام إلى هذه الوزارة؟<br><textarea id="reason" required></textarea></label><br><br>
+          <label>ما هي المهارات التي تمتلكها؟<br><textarea id="skills" required></textarea></label><br><br>
+          <label>كم لديك من الخبرة في هذا المجال؟<br><input type="text" id="experience" required></label><br><br>
+          <label>هل سبق لك العمل في مكان مشابه؟<br><input type="text" id="previous" required></label><br><br>
+          <button type="submit">إرسال الطلب</button>
+        </form>
+        <button class="back-btn" onclick="goBack('jobsList')">رجوع</button>
+      </section>
+
+      <div id="popup" class="popup">
+        <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="تم">
+        <h3>✅ تم إرسال تقديمك!</h3>
+        <p>سيتم التواصل معك في الخاص على الديسكورد.</p>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const sections = ['home', 'jobsList', 'jobForm'];
+    let currentJob = '';
+
+    function showSection(id) {
+      sections.forEach(sec => document.getElementById(sec).classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function showJobForm(job) {
+      const titles = {
+        interior: 'وزارة الداخلية',
+        health: 'وزارة الصحة',
+        justice: 'وزارة العدل',
+        commerce: 'وزارة التجارة'
+      };
+      currentJob = titles[job];
+      document.getElementById('jobTitle').innerText = titles[job];
+      showSection('jobForm');
+    }
+
+    function goBack(toSection) {
+      showSection(toSection);
+    }
+
+    document.getElementById('applicationForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const data = {
+        content: `📥 تقديم جديد لوظيفة: **${currentJob}**\n` +
+                 `👤 يوزر الديسكورد: ${document.getElementById('discord').value}\n` +
+                 `🎭 اسم الشخصية: ${document.getElementById('character').value}\n` +
+                 `📝 السبب: ${document.getElementById('reason').value}\n` +
+                 `💡 المهارات: ${document.getElementById('skills').value}\n` +
+                 `📆 الخبرة: ${document.getElementById('experience').value}\n` +
+                 `📍 خبرة سابقة: ${document.getElementById('previous').value}`
+      };
+
+      await fetch("https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      document.getElementById('applicationForm').reset();
+      document.getElementById('popup').classList.add('show');
+      setTimeout(() => document.getElementById('popup').classList.remove('show'), 4000);
+    });
+  </script>
+</body>
+</html>
