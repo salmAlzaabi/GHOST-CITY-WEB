@@ -1,165 +1,150 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ghost City</title>
-  <link rel="icon" href="https://postimg.cc/WDPmC8nc" type="image/x-icon">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #1f1f1f;
-      color: #fff;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #333;
-      padding: 10px;
-      text-align: center;
-    }
-    header a {
-      text-decoration: none;
-      color: #fff;
-      font-size: 24px;
-      font-weight: bold;
-    }
-    .content {
-      padding: 20px;
-    }
-    input[type="text"], input[type="email"], textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      background-color: #444;
-      border: 1px solid #555;
-      border-radius: 5px;
-      color: #fff;
-    }
-    button {
-      background-color: #555;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #777;
-    }
-    .form-container {
-      width: 50%;
-      margin: 0 auto;
-    }
-    .message {
-      background-color: #333;
-      padding: 10px;
-      border-radius: 5px;
-      margin-top: 20px;
-    }
-    .hidden {
-      display: none;
-    }
-    .admin-panel {
-      margin-top: 40px;
-    }
-    .admin-panel button {
-      margin: 10px 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost City</title>
+    <link rel="icon" href="https://i.imgur.com/WDPmC8nc.png" type="image/png"> <!-- لوجو -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #222;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            color: #fff;
+        }
+        .logo {
+            width: 40px;
+            height: 40px;
+        }
+        .header-links {
+            display: flex;
+            gap: 20px;
+        }
+        .header-links a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .content {
+            margin: 20px;
+        }
+        .content h2 {
+            color: #00bcd4;
+        }
+        .form-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .input-field, .submit-button {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #333;
+            color: white;
+        }
+        .input-field {
+            background-color: #444;
+        }
+        .submit-button {
+            background-color: #00bcd4;
+            cursor: pointer;
+        }
+        .submit-button:hover {
+            background-color: #0097a7;
+        }
+        .settings-btn {
+            background-color: #ff5722;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+        }
+        .settings-btn:hover {
+            background-color: #e64a19;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <a href="index.html">Ghost City</a>
-  </header>
-  
-  <div class="content">
+
+<header>
+    <img src="https://i.imgur.com/WDPmC8nc.png" alt="Ghost City Logo" class="logo">
+    <h1>Ghost City</h1>
+    <div class="header-links">
+        <a href="#home">الصفحة الرئيسية</a>
+        <a href="#jobs">الوظائف</a>
+        <a href="#settings" class="settings-btn">الإعدادات</a>
+    </div>
+</header>
+
+<div class="content">
+    <h2>تقديم طلب</h2>
     <div class="form-container">
-      <h2>تقديم على الوظائف</h2>
-      <form id="jobForm">
-        <label for="discordUser">يوزر ديسكورد:</label>
-        <input type="text" id="discordUser" name="discordUser" required>
+        <label for="discord-username">يوزر الديسكورد:</label>
+        <input type="text" id="discord-username" class="input-field" placeholder="أدخل يوزر الديسكورد" required>
         
-        <label for="email">البريد الإلكتروني:</label>
-        <input type="email" id="email" name="email" required>
+        <label for="job-selection">اختر الوظيفة:</label>
+        <select id="job-selection" class="input-field" required>
+            <option value="">اختر الوظيفة</option>
+            <option value="وظيفة1">وظيفة 1</option>
+            <option value="وظيفة2">وظيفة 2</option>
+            <option value="وظيفة3">وظيفة 3</option>
+        </select>
         
-        <label for="coverLetter">خطاب التقديم:</label>
-        <textarea id="coverLetter" name="coverLetter" rows="4" required></textarea>
-        
-        <button type="submit">إرسال الطلب</button>
-      </form>
-
-      <div class="message hidden" id="successMessage">
-        تم إرسال تقديمك بنجاح! 🎉
-      </div>
+        <button class="submit-button" onclick="sendToWebhook()">إرسال الطلب</button>
     </div>
+</div>
 
-    <!-- لوحة التحكم الإدارية -->
-    <div class="admin-panel hidden" id="adminPanel">
-      <h2>إدارة الرتب والصلاحيات</h2>
-      
-      <button id="showRanks">عرض الرتب المتاحة</button>
-      <div class="message hidden" id="ranksList">
-        <p>لا توجد رتب حالياً.</p>
-      </div>
-      
-      <button id="showSettings">إعدادات الرومات والصلاحيات</button>
-      <div class="message hidden" id="settingsPanel">
-        <p>يمكنك هنا إغلاق الرومات أو حذفها.</p>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // إعداد الويب هوك للإرسال
-    const webhookURL = "https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw";
-    
-    document.getElementById("jobForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      const discordUser = document.getElementById("discordUser").value;
-      const email = document.getElementById("email").value;
-      const coverLetter = document.getElementById("coverLetter").value;
-      
-      const message = {
-        content: `يوزر ديسكورد: ${discordUser}\nالبريد الإلكتروني: ${email}\nخطاب التقديم: ${coverLetter}`
-      };
-
-      fetch(webhookURL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(message)
-      })
-      .then(response => {
-        if (response.ok) {
-          document.getElementById("successMessage").classList.remove("hidden");
-        } else {
-          alert("فشل في إرسال الطلب.");
+<script>
+    function sendToWebhook() {
+        const discordUsername = document.getElementById('discord-username').value;
+        const jobSelection = document.getElementById('job-selection').value;
+        
+        if (!discordUsername || !jobSelection) {
+            alert('يرجى ملء جميع الحقول.');
+            return;
         }
-      });
-    });
-
-    // نظام الرتب والصلاحيات
-    const adminRole = "admin"; // تحديد الرتبة التي يحق لها الوصول للإدارة
-
-    const userRole = "admin"; // اختبر الرتبة (يجب ربطها مع النظام في قاعدة بيانات حقيقية)
-
-    // إظهار لوحة الإدارة فقط إذا كانت الرتبة "admin"
-    if (userRole === adminRole) {
-      document.getElementById("adminPanel").classList.remove("hidden");
+        
+        const webhookUrl = 'https://discord.com/api/webhooks/1360161717778124911/ADgzbyld6x_Oe8DHFEO8rKShw9uzCBFmWW6paN_VeMg55v33Rjyf9tnaswBtcm0Gitaw';
+        
+        const data = {
+            content: `طلب تقديم جديد:
+- يوزر الديسكورد: ${discordUsername}
+- الوظيفة المختارة: ${jobSelection}`
+        };
+        
+        fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('تم إرسال الطلب بنجاح!');
+                document.getElementById('discord-username').value = '';
+                document.getElementById('job-selection').value = '';
+            } else {
+                alert('حدث خطأ أثناء إرسال الطلب. حاول مرة أخرى.');
+            }
+        })
+        .catch(error => {
+            alert('حدث خطأ أثناء إرسال الطلب. حاول مرة أخرى.');
+        });
     }
+</script>
 
-    // إدارة الرتب
-    document.getElementById("showRanks").addEventListener("click", function() {
-      document.getElementById("ranksList").classList.remove("hidden");
-    });
-
-    // إعدادات الرومات والصلاحيات
-    document.getElementById("showSettings").addEventListener("click", function() {
-      document.getElementById("settingsPanel").classList.remove("hidden");
-    });
-  </script>
 </body>
 </html>
